@@ -92,10 +92,9 @@
     <h2>The laboratory</h2>
     <div class="cols">
       <figure class="figure">
-        <img src="assets/setup.png" alt="Setup of the laboratory: ceiling radars 3 m high, infrared cameras around the participant, RFID tags and IMU sensors on the suit">
-        <figcaption>The 3 m setup: ceiling radars above the participant (radar 2 in the centre, the corner radars
-          0.75 m to the side and √3 m to the front and back), infrared cameras around the room, RFID tags and
-          IMU sensors on the motion-capture suit.</figcaption>
+        <img src="assets/lab.jpg" alt="The laboratory: the grey floor with the standing point, the ground radars on tripods around it, and the infrared cameras on the truss above">
+        <figcaption>The laboratory: the ground radars on tripods around the standing point, the infrared cameras
+          on the truss above, and the ceiling radars 3 m high (first part of C1: 5 m).</figcaption>
       </figure>
       <div>
         <p>The participant stands at the centre of a circle of eight ground radars (radius 1.5 m, height 1.3 m,
@@ -155,8 +154,11 @@ scripts/ readers, loader, download script</code></pre>
       <label class="ctl">Modality <select id="x-modality"></select></label>
       <label class="ctl">View <select id="x-view"></select></label>
       <label class="ctl" id="x-radars-label">Radars <select id="x-radars"></select></label>
-      <label class="ctl">Start (s) <input id="x-start" type="number" min="0" step="1" value="0"></label>
-      <label class="ctl">End (s), empty = end <input id="x-end" type="number" min="0" step="1"></label>
+      <div class="ctl range-ctl"><span>Time window: <b id="x-window">whole trial</b></span>
+        <div class="dual"><div class="dual-bar"><div class="dual-fill" id="x-fill"></div></div>
+          <input id="x-start" type="range" min="0" max="10" step="0.1" value="0" aria-label="start of the window, s">
+          <input id="x-end" type="range" min="0" max="10" step="0.1" value="10" aria-label="end of the window, s">
+        </div></div>
       <button class="btn primary" id="x-draw" type="button">Draw</button>
     </div>
     <div id="x-plot" class="plot"></div>

@@ -50,9 +50,27 @@
     const present = [...Array(13).keys()].filter(k => !missing.has(k));
     fill(sel.radars, [["all radars", "all"], ["ceiling radars (0-4)", "ceiling"], ["ground radars (5-12)", "ground"],
                       ...present.map(k => [`radar ${k}`, String(k)])], true);
-    sel.start.value = 0;
-    sel.end.value = r.campaign === "C3" ? 20 : "";
+    setWindow(r, r.campaign === "C3" ? 20 : null);
     onModality();
+  }
+  // the slider with two handles: 0 to the length of the trial
+  function trialLength(r) {
+    const d = ["radar_duration_s", "mocap_duration_s", "lora_duration_s", "rfid_duration_s", "imu_duration_s"]
+      .map(k => parseFloat(r[k])).filter(v => !isNaN(v));
+    return Math.ceil(Math.max(1, ...d));
+  }
+  function setWindow(r, end) {
+    const max = trialLength(r);
+    sel.start.max = max; sel.end.max = max;
+    sel.start.value = 0; sel.end.value = end && end < max ? end : max;
+    showWindow();
+  }
+  function showWindow() {
+    let a = parseFloat(sel.start.value), b = parseFloat(sel.end.value);
+    const max = parseFloat(sel.end.max);
+    if (b - a < 0.5) { if (this === sel.start) { a = Math.max(0, b - 0.5); sel.start.value = a; } else { b = Math.min(max, a + 0.5); sel.end.value = b; } }
+    $("x-fill").style.left = `${a / max * 100}%`; $("x-fill").style.width = `${(b - a) / max * 100}%`;
+    $("x-window").textContent = a === 0 && b >= max ? `whole trial (${max} s)` : `${a.toFixed(1)} to ${b.toFixed(1)} s`;
   }
   function onModality() {
     fill(sel.view, VIEWS[sel.modality.value].map(v => [v, v]), true);
@@ -70,7 +88,7 @@
   }
   function window_() {
     const s = parseFloat(sel.start.value), e = parseFloat(sel.end.value);
-    return [isNaN(s) || s < 0 ? 0 : s, isNaN(e) || e <= 0 ? Infinity : e];
+    return [s, e >= parseFloat(sel.end.max) ? Infinity : e];
   }
 
   // ---- data ----------------------------------------------------------------
@@ -92,9 +110,9 @@
   // ---- views ---------------------------------------------------------------
   function radarCloud(r, d, radars, [s, e]) {
     const ceiling = parseFloat(r.ceiling_radar_height_m);
-    const present = radars.filter(k => d.radars[k]);
+    const present = radars;                       // every selected radar keeps its legend entry
     let tMax = 0, tMin = Infinity;
-    for (const k of present) for (const t of d.radars[k].t) if (t >= s && t <= e) { tMax = Math.max(tMax, t); tMin = Math.min(tMin, t); }
+    for (const k of present) if (d.radars[k]) for (const t of d.radars[k].t) if (t >= s && t <= e) { tMax = Math.max(tMax, t); tMin = Math.min(tMin, t); }
     if (!isFinite(tMin)) throw new Error("no points in the window");
     let step = 0.1, n = Math.floor((tMax - tMin) / step) + 1;
     if (n > 200) { step = (tMax - tMin) / 200; n = 200; }
@@ -103,12 +121,13 @@
       const t = tMin + i * step;
       frames.push({ name: String(i), data: present.map(k => {
         const p = d.radars[k], x = [], y = [], z = [];
-        for (let j = 0; j < p.n; j++) if (p.t[j] >= t && p.t[j] < t + step) { x.push(p.x[j]); y.push(p.y[j]); z.push(p.z[j]); }
+        if (p) for (let j = 0; j < p.n; j++) if (p.t[j] >= t && p.t[j] < t + step) { x.push(p.x[j]); y.push(p.y[j]); z.push(p.z[j]); }
+        if (!x.length) { x.push(99); y.push(99); z.push(99); }   // a point outside the room keeps the legend entry
         return { x, y, z };
       }), layout: { title: { text: title(r, `point cloud, ${t.toFixed(2)} s`) } } });
     }
-    const traces = present.map((k, i) => ({ type: "scatter3d", mode: "markers", name: `radar ${k}`,
-      marker: { size: 3, color: RADAR_COLORS[k] }, ...frames[0].data[i] }));
+    const traces = present.map((k, i) => ({ type: "scatter3d", mode: "markers",
+      name: `radar ${k}${d.radars[k] ? "" : " (no file)"}`, marker: { size: 3, color: RADAR_COLORS[k] }, ...frames[0].data[i] }));
     const pos = radars.map(k => R.radarPosition(k, ceiling));
     traces.push({ type: "scatter3d", mode: "markers+text", name: "radar positions", text: radars.map(String),
       textposition: "top center", textfont: { size: 10 }, x: pos.map(p => p[0]), y: pos.map(p => p[1]), z: pos.map(p => p[2]),
@@ -123,7 +142,7 @@
       scene: { xaxis: { ...axis, title: "x (m)" }, yaxis: { ...axis, title: "y (m)" },
                zaxis: { range: [0, ceiling + 0.5], title: "z (m)", ...grid() }, aspectmode: "manual",
                aspectratio: { x: 1, y: 1, z: (ceiling + 0.5) / 9 }, camera: { eye: { x: 1.4, y: -1.6, z: 0.9 } } },
-      legend: { orientation: "h", x: 1, xanchor: "right", y: 1.02, yanchor: "bottom" }, margin: { l: 20, r: 20, t: 90, b: 90 },
+      legend: { orientation: "h", x: 1, xanchor: "right", y: 1.02, yanchor: "bottom", itemsizing: "constant" }, margin: { l: 20, r: 20, t: 120, b: 90 },
       updatemenus: [{ type: "buttons", direction: "right", x: 0, y: 1.02, xanchor: "left", yanchor: "bottom", showactive: false, pad: { r: 6 }, buttons: [
         { label: "Play", method: "animate", args: [null, { frame: { duration: Math.max(60, step * 1000), redraw: true }, fromcurrent: true, transition: { duration: 0 } }] },
         { label: "Pause", method: "animate", args: [[null], { mode: "immediate", frame: { duration: 0, redraw: false } }] }] }],
@@ -232,7 +251,7 @@
       scene: { xaxis: { range: [cx - half, cx + half], title: "X side (m)", ...grid() }, yaxis: { range: [cy - half, cy + half], title: "Z front (m)", ...grid() },
                zaxis: { range: [0, zTop], title: "Y up (m)", ...grid() },
                aspectmode: "manual", aspectratio: { x: 1, y: 1, z: zTop / (2 * half) }, camera: { eye: { x: 1.3, y: -1.9, z: 0.6 } } },
-      legend: { orientation: "h", x: 1, xanchor: "right", y: 1.02, yanchor: "bottom" }, margin: { l: 20, r: 20, t: 90, b: 90 },
+      legend: { orientation: "h", x: 1, xanchor: "right", y: 1.02, yanchor: "bottom", itemsizing: "constant" }, margin: { l: 20, r: 20, t: 120, b: 90 },
       updatemenus: [{ type: "buttons", direction: "right", x: 0, y: 1.02, xanchor: "left", yanchor: "bottom", showactive: false, pad: { r: 6 }, buttons: [
         { label: "Play", method: "animate", args: [null, { frame: { duration: 60, redraw: true }, fromcurrent: true, transition: { duration: 0 } }] },
         { label: "Pause", method: "animate", args: [[null], { mode: "immediate", frame: { duration: 0, redraw: false } }] }] }],
@@ -305,5 +324,7 @@
   sel.campaign.onchange = onCampaign; sel.user.onchange = onUser; sel.cls.onchange = onClass;
   sel.modality.onchange = onModality; sel.view.onchange = draw; sel.radars.onchange = draw;
   $("x-draw").onclick = draw;
+  sel.start.oninput = showWindow; sel.end.oninput = showWindow;
+  sel.start.onchange = draw; sel.end.onchange = draw;
   onCampaign();
 })();
