@@ -220,8 +220,11 @@ sample = dataset[0]
 sample["class_name"]                     # 'arms swing'
 sample["modality_data"]["radar"][5]["points"]
 loader = get_dataloader(dataset, batch_size=4)</code></pre>
-        <div class="note">The scripts (readers, loader, download) are MIT licensed. The living-room and industrial
-          recordings follow in the same format.</div>
+        <p>To draw a trial with the reader scripts, put the download into the recording layout first:</p>
+        <pre><code>python unpack_release.py --download ./RF-Behavior --out ./RF-Behavior_unpacked
+python Radar/read_vis.py --root ./RF-Behavior_unpacked/Lab/Radar     --view animation --campaign C2 --user U01 --cls A01</code></pre>
+        <div class="note">The scripts (readers, loader, download, unpack) are MIT licensed and need only numpy,
+          pandas, and matplotlib. The living-room and industrial recordings follow in the same format.</div>
       </div>
     </div>
   </div>
