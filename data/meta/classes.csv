@@ -1,0 +1,38 @@
+campaign,campaign_name,class,class_name
+C1,gestures,M01,lateral raise
+C1,gestures,M02,push down
+C1,gestures,M03,lift
+C1,gestures,M04,pull
+C1,gestures,M05,push
+C1,gestures,M06,lateral to front
+C1,gestures,M07,swipe right
+C1,gestures,M08,swipe left
+C1,gestures,M09,throw
+C1,gestures,M10,arms swing
+C1,gestures,M11,two-hand throw
+C1,gestures,M12,two-hand push
+C1,gestures,M13,two-hand pull
+C1,gestures,M14,two-hand lateral raise
+C1,gestures,M15,left-arm circle
+C1,gestures,M16,right-arm circle
+C1,gestures,M17,two-hand outward circles
+C1,gestures,M18,two-hand inward circles
+C1,gestures,M19,two-hand lateral to front
+C1,gestures,M20,circle clockwise
+C1,gestures,M21,circle counter-clockwise
+C2,activities,A01,walking
+C2,activities,A02,running
+C2,activities,A03,sitting
+C2,activities,A04,lying
+C2,activities,A05,ascending stairs
+C2,activities,A06,descending stairs
+C2,activities,A07,passing basketball
+C2,activities,A08,playing badminton
+C2,activities,A09,playing floorball
+C2,activities,A10,kicking football
+C3,sentiment expressions,E01,focus
+C3,sentiment expressions,E02,distraction
+C3,sentiment expressions,E03,stress
+C3,sentiment expressions,E04,relaxation
+C3,sentiment expressions,E05,depression
+C3,sentiment expressions,E06,excitement

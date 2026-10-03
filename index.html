@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RF-Behavior dataset</title>
+<meta name="description" content="RF-Behavior: a multimodal radio-frequency dataset for human behavior and emotion analysis. 44 participants, 13 mmWave radars, LoRa, RFID, motion capture, IMUs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='3' fill='%23f5c400'/></svg>">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="dot"></span>RF-Behavior</a>
+    <nav class="menu">
+      <a href="#overview">Overview</a>
+      <a href="#setup">Setup</a>
+      <a href="#data">Data</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#download">Download</a>
+      <a href="#cite">Cite</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <p class="kicker">Dataset · Aalto University</p>
+    <h1>RF-Behavior: a multimodal <span>radio-frequency</span> dataset for human behavior and emotion analysis</h1>
+    <p class="authors">Si Zuo, Yuqing Song, Sahar Golipoor, Ying Liu, Xujun Ma, Stephan Sigg</p>
+    <p class="affil">Ambient Intelligence group, Department of Information and Communications Engineering,
+      Aalto University, Finland</p>
+    <div class="buttons">
+      <a class="btn primary" href="https://arxiv.org/abs/2511.06020">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></svg>
+        Paper (arXiv)</a>
+      <a class="btn" href="https://huggingface.co/datasets/Si-Z/RF-Behavior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+        Dataset (Hugging Face)</a>
+      <a class="btn" href="https://huggingface.co/spaces/Si-Z/RF-Behavior-gallery">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 15l5-5 4 4 3-3 6 6"/></svg>
+        Gallery</a>
+      <a class="btn" href="https://huggingface.co/datasets/Si-Z/RF-Behavior/tree/main/scripts">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6l-6 6 6 6"/><path d="M16 6l6 6-6 6"/></svg>
+        Reader scripts</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>44</b><span>participants</span></div>
+      <div class="stat"><b>37</b><span>classes: 21 gestures, 10 activities, 6 sentiments</span></div>
+      <div class="stat"><b>5</b><span>sensing modalities, recorded at the same time</span></div>
+      <div class="stat"><b>13</b><span>mmWave radars: 8 ground, 5 ceiling</span></div>
+      <div class="stat"><b>3</b><span>environments: laboratory, living room, industry</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="overview">
+  <div class="wrap">
+    <p class="kicker">Overview</p>
+    <h2>Five radio-frequency and reference modalities, one clock</h2>
+    <p class="lead">Participants performed hand and arm gestures, daily activities, and expressions of six
+      sentiments while 13 mmWave radars, a LoRa link, passive RFID tags on the arms, body-worn IMUs, and a
+      24-camera infrared motion-capture system recorded them at the same time. The motion capture gives the
+      reference of body motion for every radio-frequency signal.</p>
+    <div class="cards">
+      <div class="card"><h3>Radar</h3><p>13 TI IWR1443 mmWave radars (77–81 GHz). Point clouds of moving
+        reflections: time, x, y, z, signal strength. About 30 frames/s on the ground, 5–7 on the ceiling.</p>
+        <span class="tag">node r · all radars of a trial in one zip</span></div>
+      <div class="card"><h3>LoRa</h3><p>Semtech SX1276 node and USRP receiver at 865.5 MHz. Amplitude of the
+        baseband signal at 200 Hz, its difference, and its variance at 20 Hz.</p>
+        <span class="tag">node 5 · next to radar 5</span></div>
+      <div class="card"><h3>RFID</h3><p>Six passive Alien tags on the arms (wrist, below and above the elbow),
+        read by an Impinj Speedway R420. Time stamp, tag, RSSI, and phase of every read.</p>
+        <span class="tag">node 13 · antenna on radar 5</span></div>
+      <div class="card"><h3>Motion capture</h3><p>24 infrared cameras at 100 Hz. Position and rotation of the
+        rigid bodies of the suit: chest, arms; in activities and sentiments also hips and legs.</p>
+        <span class="tag">node 14 · reference of body motion</span></div>
+      <div class="card"><h3>IMU</h3><p>Movesense sensors on the chest and the limbs at 104 Hz: acceleration,
+        angular rate, magnetic field.</p>
+        <span class="tag">node x · body-worn</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="setup" class="alt">
+  <div class="wrap">
+    <p class="kicker">Setup</p>
+    <h2>The laboratory</h2>
+    <div class="cols">
+      <figure class="figure">
+        <img src="assets/setup.png" alt="Setup of the laboratory: ceiling radars 3 m high, infrared cameras around the participant, RFID tags and IMU sensors on the suit">
+        <figcaption>The 3 m setup: ceiling radars above the participant (radar 2 in the centre, the corner radars
+          0.75 m to the side and √3 m to the front and back), infrared cameras around the room, RFID tags and
+          IMU sensors on the motion-capture suit.</figcaption>
+      </figure>
+      <div>
+        <p>The participant stands at the centre of a circle of eight ground radars (radius 1.5 m, height 1.3 m,
+          every 45°). Five more radars look down from the ceiling. The LoRa antenna and the RFID antenna sit next
+          to radar 5. The motion-capture frame has its origin at the standing point.</p>
+        <table>
+          <tr><th>Campaign</th><th>Classes</th><th>Length</th></tr>
+          <tr><td>C1 gestures</td><td>21 hand and arm gestures (raise, push, pull, swipe, throw, circles, …)</td><td class="num">3.5 s</td></tr>
+          <tr><td>C2 activities</td><td>walking, running, sitting, lying, stairs, basketball, badminton, floorball, football</td><td class="num">6 s</td></tr>
+          <tr><td>C3 sentiments</td><td>focus, distraction, stress, relaxation, depression, excitement</td><td class="num">2.5 min</td></tr>
+        </table>
+        <p style="margin-top:14px">The ceiling radars were 5 m high for the first 16 participants of C1 and 3 m
+          high afterwards; the trial table records the height of every trial.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="data">
+  <div class="wrap">
+    <p class="kicker">Data</p>
+    <h2>One zip per trial and modality</h2>
+    <p class="lead">The release follows the OctoNet file convention: flat folders, and one zip for each trial and
+      modality, named <code>&lt;node&gt;_&lt;modality&gt;_&lt;environment&gt;_&lt;user&gt;_&lt;class&gt;_&lt;repetition&gt;_&lt;time&gt;.zip</code>.
+      The five zips of a trial share the same time stamp.</p>
+    <pre><code>radar/   r_radar_1_1_M10_1_20250710163420.zip    radar_00.npz … radar_12.npz
+lora/    5_lora_1_1_M10_1_20250710163420.zip     abs_200Hz.csv, diff_200Hz.csv, var_20Hz.csv
+rfid/    13_rfid_1_1_M10_1_20250710163420.zip    rfid.csv
+mocap/   14_mocap_1_1_M10_1_20250710163420.zip   mocap.csv
+imu/     x_imu_1_3_E01_1_20250720180733.zip      Chest_acc_data.csv, Chest_gyro_data.csv, …
+meta/    trials_Lab.csv, classes.csv, nodes.csv, packing_log_Lab.csv
+scripts/ readers, loader, download script</code></pre>
+    <table>
+      <tr><th>Laboratory release</th><th>Trials</th><th>Files</th><th>Size</th></tr>
+      <tr><td>C1 gestures, 25 participants</td><td class="num">4,193</td><td class="num" rowspan="3">25,440 zips</td><td class="num" rowspan="3">1.4 GB</td></tr>
+      <tr><td>C2 activities, 26 participants</td><td class="num">2,084</td></tr>
+      <tr><td>C3 sentiments, 23 participants</td><td class="num">133</td></tr>
+    </table>
+    <p style="margin-top:14px">The trial table <code>meta/trials_Lab.csv</code> has one row per trial: participant,
+      class, repetition, reference time, ceiling height, and for every modality its presence, start, duration,
+      and extra facts. A Python loader with the OctoNet API (<code>get_dataset</code>, <code>get_dataloader</code>)
+      and a reader with figures for every modality ship with the data.</p>
+  </div>
+</section>
+
+<section id="gallery" class="alt">
+  <div class="wrap">
+    <p class="kicker">Gallery</p>
+    <h2>One participant, every class, every modality</h2>
+    <p class="lead">Figures made by the reader scripts of the dataset. Pick a campaign, a class, a modality, and a
+      view. Radar views can show all radars or the ground radars only.</p>
+    <div class="controls">
+      <label class="ctl">Campaign <select id="campaign"></select></label>
+      <label class="ctl">Participant <select id="user"></select></label>
+      <label class="ctl">Class <select id="cls"></select></label>
+      <label class="ctl">Modality <select id="modality"></select></label>
+      <label class="ctl">View <select id="view"></select></label>
+      <label class="ctl" id="radars-label">Radars <select id="radars"></select></label>
+    </div>
+    <figure class="gallery-figure">
+      <img id="figure" alt="">
+      <figcaption id="caption"></figcaption>
+    </figure>
+    <table id="facts"></table>
+  </div>
+</section>
+
+<section id="download">
+  <div class="wrap">
+    <p class="kicker">Download</p>
+    <h2>Access for academic research</h2>
+    <div class="cols">
+      <div>
+        <p>The dataset is released under CC BY-NC-SA 4.0 for non-commercial research. Access is gated: request it
+          on the dataset page, accept the terms, and we approve the request. Then:</p>
+        <ol class="steps">
+          <li>Log in once: <code>hf auth login</code></li>
+          <li>Download a selection with the script, for example gestures of three participants, radar and LoRa only:</li>
+        </ol>
+        <pre><code>python download_rfbehavior.py --campaign C1 --user 1 3 4 \
+    --modality radar lora --out ./RF-Behavior</code></pre>
+        <p>or with the Hub library:</p>
+        <pre><code>from huggingface_hub import snapshot_download
+snapshot_download("Si-Z/RF-Behavior", repo_type="dataset",
+    local_dir="RF-Behavior",
+    allow_patterns=["meta/*", "radar/r_radar_1_1_M*"])</code></pre>
+      </div>
+      <div>
+        <h3 style="margin-top:0">Load</h3>
+        <pre><code>from rfbehavior_loader import get_dataset, get_dataloader
+
+config = {"environment": [1], "campaign": ["C1"],
+          "node_id": [5, 6, 7],
+          "modality": ["radar", "lora", "rfid", "mocap"]}
+dataset = get_dataset(config, "RF-Behavior")
+sample = dataset[0]
+sample["class_name"]                     # 'arms swing'
+sample["modality_data"]["radar"][5]["points"]
+loader = get_dataloader(dataset, batch_size=4)</code></pre>
+        <div class="note">The scripts (readers, loader, download) are MIT licensed. The living-room and industrial
+          recordings follow in the same format.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cite" class="alt">
+  <div class="wrap">
+    <p class="kicker">Cite</p>
+    <h2>Citation</h2>
+    <pre><button class="copy" id="copy-bib">Copy</button><code id="bibtex">@article{zuo2025rfbehavior,
+  title   = {RF-Behavior: A Multimodal Radio-Frequency Dataset for Human Behavior and Emotion Analysis},
+  author  = {Zuo, Si and Song, Yuqing and Golipoor, Sahar and Liu, Ying and Ma, Xujun and Sigg, Stephan},
+  journal = {arXiv preprint arXiv:2511.06020},
+  year    = {2025}
+}</code></pre>
+    <p>Contact: Si Zuo, Aalto University.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logos">
+      <img src="assets/aalto.png" alt="Aalto University, School of Electrical Engineering">
+      <img class="group" src="assets/group.png" alt="Ambient Intelligence group">
+    </div>
+    <p>Data: CC BY-NC-SA 4.0 · Scripts and this site: MIT · Participants gave informed consent under the ethics
+      approval of Aalto University.</p>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/gallery.js"></script>
+<script>
+  document.getElementById("copy-bib").onclick = async function () {
+    await navigator.clipboard.writeText(document.getElementById("bibtex").textContent);
+    this.textContent = "Copied"; setTimeout(() => this.textContent = "Copy", 1500);
+  };
+</script>
+</body>
+</html>

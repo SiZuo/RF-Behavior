@@ -1,0 +1,24 @@
+node,modality,description,x_m,y_m,z_m,angle_deg,note
+0,radar,"ceiling radar 0 (TI IWR1443), facing the floor, 5 m setup",-2,4,5,,"5 m setup: first part of Lab C1 (trials.csv, column ceiling_radar_height_m = 5)"
+0,radar,"ceiling radar 0 (TI IWR1443), facing the floor, 3 m setup",-0.75,1.73,3,,"3 m setup: rest of Lab C1, Lab C2 and C3, LivingRoom, Industry (ceiling_radar_height_m = 3)"
+1,radar,"ceiling radar 1 (TI IWR1443), facing the floor, 5 m setup",2,4,5,,"5 m setup: first part of Lab C1 (trials.csv, column ceiling_radar_height_m = 5)"
+1,radar,"ceiling radar 1 (TI IWR1443), facing the floor, 3 m setup",0.75,1.73,3,,"3 m setup: rest of Lab C1, Lab C2 and C3, LivingRoom, Industry (ceiling_radar_height_m = 3)"
+2,radar,"ceiling radar 2 (TI IWR1443), facing the floor, 5 m setup",0,0,5,,"5 m setup: first part of Lab C1 (trials.csv, column ceiling_radar_height_m = 5)"
+2,radar,"ceiling radar 2 (TI IWR1443), facing the floor, 3 m setup",0,0,3,,"3 m setup: rest of Lab C1, Lab C2 and C3, LivingRoom, Industry (ceiling_radar_height_m = 3)"
+3,radar,"ceiling radar 3 (TI IWR1443), facing the floor, 5 m setup",-2,-4,5,,"5 m setup: first part of Lab C1 (trials.csv, column ceiling_radar_height_m = 5)"
+3,radar,"ceiling radar 3 (TI IWR1443), facing the floor, 3 m setup",-0.75,-1.73,3,,"3 m setup: rest of Lab C1, Lab C2 and C3, LivingRoom, Industry (ceiling_radar_height_m = 3)"
+4,radar,"ceiling radar 4 (TI IWR1443), facing the floor, 5 m setup",2,-4,5,,"5 m setup: first part of Lab C1 (trials.csv, column ceiling_radar_height_m = 5)"
+4,radar,"ceiling radar 4 (TI IWR1443), facing the floor, 3 m setup",0.75,-1.73,3,,"3 m setup: rest of Lab C1, Lab C2 and C3, LivingRoom, Industry (ceiling_radar_height_m = 3)"
+5,radar,"ground radar 5 (TI IWR1443), facing the participant",1.5,0,1.3,0,"circle of radius 1.5 m, height 1.3 m"
+6,radar,"ground radar 6 (TI IWR1443), facing the participant",1.06,-1.06,1.3,45,"circle of radius 1.5 m, height 1.3 m"
+7,radar,"ground radar 7 (TI IWR1443), facing the participant",0,-1.5,1.3,90,"circle of radius 1.5 m, height 1.3 m"
+8,radar,"ground radar 8 (TI IWR1443), facing the participant",-1.06,-1.06,1.3,135,"circle of radius 1.5 m, height 1.3 m"
+9,radar,"ground radar 9 (TI IWR1443), facing the participant",-1.5,0,1.3,180,"circle of radius 1.5 m, height 1.3 m"
+10,radar,"ground radar 10 (TI IWR1443), facing the participant",-1.06,1.06,1.3,225,"circle of radius 1.5 m, height 1.3 m"
+11,radar,"ground radar 11 (TI IWR1443), facing the participant",0,1.5,1.3,270,"circle of radius 1.5 m, height 1.3 m"
+12,radar,"ground radar 12 (TI IWR1443), facing the participant",1.06,1.06,1.3,315,"circle of radius 1.5 m, height 1.3 m"
+r,radar,all 13 radars of one trial in one zip,,,,,"global radar frame: origin at the standing point on the floor, z up; x towards radar 5 (0 degrees)"
+5,lora,"LoRa antenna and USRP reader, next to radar 5",1.5,0,1.3,0,
+13,rfid,"RFID antenna (Impinj Speedway R420 reader), on radar 5",1.5,0,1.3,0,same position as radar 5
+14,mocap,InfraredCam system: 24 cameras around the room,0,0,0,,"its own frame: origin at the standing point on the floor, X to the side, Y up, Z to the front; the rotation between this frame and the radar frame is not recorded"
+x,imu,"body-worn IMUs (Movesense), no fixed position",,,,,
