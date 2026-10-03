@@ -17,7 +17,8 @@
   ],
   "mocap": [
    "motion: which rigid bodies move, and when",
-   "skeleton: stick figure at several moments"
+   "skeleton: stick figure at several moments",
+   "animation: the stick figure in time (GIF; takes some seconds)"
   ],
   "imu": [
    "motion: which sensors turn, and when",
@@ -1730,6 +1731,20 @@
   {
    "campaign": "C1",
    "user": "U01",
+   "cls": "M01",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M01_01_-.gif"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
    "cls": "M02",
    "rep": "01",
    "modality": "radar",
@@ -1908,6 +1923,20 @@
     null
    ],
    "file": "figures/mocap_skeleton_C1_U01_M02_01_-.png"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
+   "cls": "M02",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M02_01_-.gif"
   },
   {
    "campaign": "C1",
@@ -2094,6 +2123,20 @@
   {
    "campaign": "C1",
    "user": "U01",
+   "cls": "M03",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M03_01_-.gif"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
    "cls": "M04",
    "rep": "01",
    "modality": "radar",
@@ -2272,6 +2315,20 @@
     null
    ],
    "file": "figures/mocap_skeleton_C1_U01_M04_01_-.png"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
+   "cls": "M04",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M04_01_-.gif"
   },
   {
    "campaign": "C1",
@@ -2458,6 +2515,20 @@
   {
    "campaign": "C1",
    "user": "U01",
+   "cls": "M05",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M05_01_-.gif"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
    "cls": "M06",
    "rep": "01",
    "modality": "radar",
@@ -2636,6 +2707,20 @@
     null
    ],
    "file": "figures/mocap_skeleton_C1_U01_M06_01_-.png"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
+   "cls": "M06",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M06_01_-.gif"
   },
   {
    "campaign": "C1",
@@ -2822,6 +2907,20 @@
   {
    "campaign": "C1",
    "user": "U01",
+   "cls": "M07",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M07_01_-.gif"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
    "cls": "M08",
    "rep": "01",
    "modality": "radar",
@@ -3000,6 +3099,20 @@
     null
    ],
    "file": "figures/mocap_skeleton_C1_U01_M08_01_-.png"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
+   "cls": "M08",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M08_01_-.gif"
   },
   {
    "campaign": "C1",
@@ -3186,6 +3299,20 @@
   {
    "campaign": "C1",
    "user": "U01",
+   "cls": "M09",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M09_01_-.gif"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
    "cls": "M10",
    "rep": "01",
    "modality": "radar",
@@ -3364,6 +3491,20 @@
     null
    ],
    "file": "figures/mocap_skeleton_C1_U01_M10_01_-.png"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
+   "cls": "M10",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M10_01_-.gif"
   },
   {
    "campaign": "C1",
@@ -3550,6 +3691,20 @@
   {
    "campaign": "C1",
    "user": "U01",
+   "cls": "M11",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M11_01_-.gif"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
    "cls": "M12",
    "rep": "01",
    "modality": "radar",
@@ -3728,6 +3883,20 @@
     null
    ],
    "file": "figures/mocap_skeleton_C1_U01_M12_01_-.png"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
+   "cls": "M12",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M12_01_-.gif"
   },
   {
    "campaign": "C1",
@@ -3914,6 +4083,20 @@
   {
    "campaign": "C1",
    "user": "U01",
+   "cls": "M13",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M13_01_-.gif"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
    "cls": "M14",
    "rep": "01",
    "modality": "radar",
@@ -4092,6 +4275,20 @@
     null
    ],
    "file": "figures/mocap_skeleton_C1_U01_M14_01_-.png"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
+   "cls": "M14",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M14_01_-.gif"
   },
   {
    "campaign": "C1",
@@ -4278,6 +4475,20 @@
   {
    "campaign": "C1",
    "user": "U01",
+   "cls": "M15",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M15_01_-.gif"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
    "cls": "M16",
    "rep": "01",
    "modality": "radar",
@@ -4456,6 +4667,20 @@
     null
    ],
    "file": "figures/mocap_skeleton_C1_U01_M16_01_-.png"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
+   "cls": "M16",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M16_01_-.gif"
   },
   {
    "campaign": "C1",
@@ -4642,6 +4867,20 @@
   {
    "campaign": "C1",
    "user": "U01",
+   "cls": "M17",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M17_01_-.gif"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
    "cls": "M18",
    "rep": "01",
    "modality": "radar",
@@ -4820,6 +5059,20 @@
     null
    ],
    "file": "figures/mocap_skeleton_C1_U01_M18_01_-.png"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
+   "cls": "M18",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M18_01_-.gif"
   },
   {
    "campaign": "C1",
@@ -5006,6 +5259,20 @@
   {
    "campaign": "C1",
    "user": "U01",
+   "cls": "M19",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M19_01_-.gif"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
    "cls": "M20",
    "rep": "01",
    "modality": "radar",
@@ -5188,6 +5455,20 @@
   {
    "campaign": "C1",
    "user": "U01",
+   "cls": "M20",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M20_01_-.gif"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
    "cls": "M21",
    "rep": "01",
    "modality": "radar",
@@ -5366,6 +5647,20 @@
     null
    ],
    "file": "figures/mocap_skeleton_C1_U01_M21_01_-.png"
+  },
+  {
+   "campaign": "C1",
+   "user": "U01",
+   "cls": "M21",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C1_U01_M21_01_-.gif"
   },
   {
    "campaign": "C2",
@@ -5552,6 +5847,20 @@
   {
    "campaign": "C2",
    "user": "U01",
+   "cls": "A01",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C2_U01_A01_01_-.gif"
+  },
+  {
+   "campaign": "C2",
+   "user": "U01",
    "cls": "A02",
    "rep": "01",
    "modality": "radar",
@@ -5730,6 +6039,20 @@
     null
    ],
    "file": "figures/mocap_skeleton_C2_U01_A02_01_-.png"
+  },
+  {
+   "campaign": "C2",
+   "user": "U01",
+   "cls": "A02",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C2_U01_A02_01_-.gif"
   },
   {
    "campaign": "C2",
@@ -5916,6 +6239,20 @@
   {
    "campaign": "C2",
    "user": "U01",
+   "cls": "A03",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C2_U01_A03_01_-.gif"
+  },
+  {
+   "campaign": "C2",
+   "user": "U01",
    "cls": "A04",
    "rep": "01",
    "modality": "radar",
@@ -6094,6 +6431,20 @@
     null
    ],
    "file": "figures/mocap_skeleton_C2_U01_A04_01_-.png"
+  },
+  {
+   "campaign": "C2",
+   "user": "U01",
+   "cls": "A04",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C2_U01_A04_01_-.gif"
   },
   {
    "campaign": "C2",
@@ -6280,6 +6631,20 @@
   {
    "campaign": "C2",
    "user": "U01",
+   "cls": "A05",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C2_U01_A05_01_-.gif"
+  },
+  {
+   "campaign": "C2",
+   "user": "U01",
    "cls": "A06",
    "rep": "01",
    "modality": "radar",
@@ -6458,6 +6823,20 @@
     null
    ],
    "file": "figures/mocap_skeleton_C2_U01_A06_01_-.png"
+  },
+  {
+   "campaign": "C2",
+   "user": "U01",
+   "cls": "A06",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C2_U01_A06_01_-.gif"
   },
   {
    "campaign": "C2",
@@ -6644,6 +7023,20 @@
   {
    "campaign": "C2",
    "user": "U01",
+   "cls": "A07",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C2_U01_A07_01_-.gif"
+  },
+  {
+   "campaign": "C2",
+   "user": "U01",
    "cls": "A08",
    "rep": "01",
    "modality": "radar",
@@ -6822,6 +7215,20 @@
     null
    ],
    "file": "figures/mocap_skeleton_C2_U01_A08_01_-.png"
+  },
+  {
+   "campaign": "C2",
+   "user": "U01",
+   "cls": "A08",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C2_U01_A08_01_-.gif"
   },
   {
    "campaign": "C2",
@@ -7008,6 +7415,20 @@
   {
    "campaign": "C2",
    "user": "U01",
+   "cls": "A09",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C2_U01_A09_01_-.gif"
+  },
+  {
+   "campaign": "C2",
+   "user": "U01",
    "cls": "A10",
    "rep": "01",
    "modality": "radar",
@@ -7186,6 +7607,20 @@
     null
    ],
    "file": "figures/mocap_skeleton_C2_U01_A10_01_-.png"
+  },
+  {
+   "campaign": "C2",
+   "user": "U01",
+   "cls": "A10",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    null,
+    null
+   ],
+   "file": "figures/mocap_animation_C2_U01_A10_01_-.gif"
   },
   {
    "campaign": "C3",
@@ -7368,6 +7803,20 @@
     10
    ],
    "file": "figures/mocap_skeleton_C3_U03_E01_01_-.png"
+  },
+  {
+   "campaign": "C3",
+   "user": "U03",
+   "cls": "E01",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    0,
+    10
+   ],
+   "file": "figures/mocap_animation_C3_U03_E01_01_-.gif"
   },
   {
    "campaign": "C3",
@@ -7598,6 +8047,20 @@
    "user": "U03",
    "cls": "E02",
    "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    0,
+    10
+   ],
+   "file": "figures/mocap_animation_C3_U03_E02_01_-.gif"
+  },
+  {
+   "campaign": "C3",
+   "user": "U03",
+   "cls": "E02",
+   "rep": "01",
    "modality": "imu",
    "view": "motion: which sensors turn, and when",
    "radars": "-",
@@ -7816,6 +8279,20 @@
     10
    ],
    "file": "figures/mocap_skeleton_C3_U03_E03_01_-.png"
+  },
+  {
+   "campaign": "C3",
+   "user": "U03",
+   "cls": "E03",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    0,
+    10
+   ],
+   "file": "figures/mocap_animation_C3_U03_E03_01_-.gif"
   },
   {
    "campaign": "C3",
@@ -8046,6 +8523,20 @@
    "user": "U03",
    "cls": "E04",
    "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    0,
+    10
+   ],
+   "file": "figures/mocap_animation_C3_U03_E04_01_-.gif"
+  },
+  {
+   "campaign": "C3",
+   "user": "U03",
+   "cls": "E04",
+   "rep": "01",
    "modality": "imu",
    "view": "motion: which sensors turn, and when",
    "radars": "-",
@@ -8270,6 +8761,20 @@
    "user": "U03",
    "cls": "E05",
    "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    0,
+    10
+   ],
+   "file": "figures/mocap_animation_C3_U03_E05_01_-.gif"
+  },
+  {
+   "campaign": "C3",
+   "user": "U03",
+   "cls": "E05",
+   "rep": "01",
    "modality": "imu",
    "view": "motion: which sensors turn, and when",
    "radars": "-",
@@ -8488,6 +8993,20 @@
     10
    ],
    "file": "figures/mocap_skeleton_C3_U03_E06_01_-.png"
+  },
+  {
+   "campaign": "C3",
+   "user": "U03",
+   "cls": "E06",
+   "rep": "01",
+   "modality": "mocap",
+   "view": "animation: the stick figure in time (GIF; takes some seconds)",
+   "radars": "-",
+   "window": [
+    0,
+    10
+   ],
+   "file": "figures/mocap_animation_C3_U03_E06_01_-.gif"
   },
   {
    "campaign": "C3",

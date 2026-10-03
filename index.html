@@ -19,6 +19,7 @@
       <a href="#overview">Overview</a>
       <a href="#setup">Setup</a>
       <a href="#data">Data</a>
+      <a href="#explore">Explore</a>
       <a href="#gallery">Gallery</a>
       <a href="#download">Download</a>
       <a href="#cite">Cite</a>
@@ -140,6 +141,29 @@ scripts/ readers, loader, download script</code></pre>
   </div>
 </section>
 
+<section id="explore">
+  <div class="wrap">
+    <p class="kicker">Explore</p>
+    <h2>Open a trial in your browser</h2>
+    <p class="lead">This page reads the release zips of the sample trials and draws them here, with the same
+      transforms as the reader scripts: the radar point cloud in the room, the LoRa features, the motion of the RFID
+      tags, the motion-capture skeleton, and the IMU signals. Nothing is sent to a server.</p>
+    <div class="controls">
+      <label class="ctl">Campaign <select id="x-campaign"></select></label>
+      <label class="ctl">Participant <select id="x-user"></select></label>
+      <label class="ctl">Class <select id="x-cls"></select></label>
+      <label class="ctl">Modality <select id="x-modality"></select></label>
+      <label class="ctl">View <select id="x-view"></select></label>
+      <label class="ctl" id="x-radars-label">Radars <select id="x-radars"></select></label>
+      <label class="ctl">Start (s) <input id="x-start" type="number" min="0" step="1" value="0"></label>
+      <label class="ctl">End (s), empty = end <input id="x-end" type="number" min="0" step="1"></label>
+      <button class="btn primary" id="x-draw" type="button">Draw</button>
+    </div>
+    <div id="x-plot" class="plot"></div>
+    <p id="x-status" class="status"></p>
+  </div>
+</section>
+
 <section id="gallery" class="alt">
   <div class="wrap">
     <p class="kicker">Gallery</p>
@@ -226,7 +250,11 @@ loader = get_dataloader(dataset, batch_size=4)</code></pre>
   </div>
 </footer>
 
+<script src="js/vendor/fflate.js"></script>
+<script src="js/vendor/plotly.min.js"></script>
 <script src="js/config.js"></script>
+<script src="js/rfb-readers.js"></script>
+<script src="js/explorer.js"></script>
 <script src="js/gallery.js"></script>
 <script>
   document.getElementById("copy-bib").onclick = async function () {
