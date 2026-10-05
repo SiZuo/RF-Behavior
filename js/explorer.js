@@ -23,6 +23,8 @@
     font: { family: "Inter, system-ui, sans-serif", size: 12, color: dark() ? "#e8e9eb" : "#121417" },
     margin: { l: 56, r: 20, t: 56, b: 48 }, height: 520, title: { y: 0.98, yanchor: "top" },
   });
+  // room above the plot for the title and a legend that wraps into several rows on narrow screens
+  const topMargin = n => 60 + Math.ceil(n * 100 / Math.max(300, plot.clientWidth - 60)) * 22;
   const grid = () => ({ gridcolor: dark() ? "#2a2f36" : "#e4e5e8", zerolinecolor: dark() ? "#2a2f36" : "#e4e5e8" });
 
   const trials = R.parseTable(await (await fetch(`${RFB.META_BASE}/trials_samples.csv`)).text());
@@ -126,6 +128,8 @@
         return { x, y, z };
       }), layout: { title: { text: title(r, `point cloud, ${t.toFixed(2)} s`) } } });
     }
+    frameDuration = Math.max(60, step * 1000);
+    const LEGEND_N = present.length + 1;
     const traces = present.map((k, i) => ({ type: "scatter3d", mode: "markers",
       name: `radar ${k}${d.radars[k] ? "" : " (no file)"}`, marker: { size: 3, color: RADAR_COLORS[k] }, ...frames[0].data[i] }));
     const pos = radars.map(k => R.radarPosition(k, ceiling));
@@ -142,10 +146,7 @@
       scene: { xaxis: { ...axis, title: "x (m)" }, yaxis: { ...axis, title: "y (m)" },
                zaxis: { range: [0, ceiling + 0.5], title: "z (m)", ...grid() }, aspectmode: "manual",
                aspectratio: { x: 1, y: 1, z: (ceiling + 0.5) / 9 }, camera: { eye: { x: 1.4, y: -1.6, z: 0.9 } } },
-      legend: { orientation: "h", x: 1, xanchor: "right", y: 1.02, yanchor: "bottom", itemsizing: "constant" }, margin: { l: 20, r: 20, t: 120, b: 90 },
-      updatemenus: [{ type: "buttons", direction: "right", x: 0, y: 1.02, xanchor: "left", yanchor: "bottom", showactive: false, pad: { r: 6 }, buttons: [
-        { label: "Play", method: "animate", args: [null, { frame: { duration: Math.max(60, step * 1000), redraw: true }, fromcurrent: true, transition: { duration: 0 } }] },
-        { label: "Pause", method: "animate", args: [[null], { mode: "immediate", frame: { duration: 0, redraw: false } }] }] }],
+      legend: { orientation: "h", x: 0, xanchor: "left", y: 1.02, yanchor: "bottom", itemsizing: "constant" }, margin: { l: 20, r: 20, t: topMargin(LEGEND_N), b: 90 },
       sliders: [{ x: 0, len: 1, y: 0, yanchor: "top", pad: { t: 24 }, currentvalue: { visible: false },
         steps: frames.map((f, i) => ({ label: (tMin + i * step).toFixed(1), method: "animate",
           args: [[f.name], { mode: "immediate", frame: { duration: 0, redraw: true }, transition: { duration: 0 } }] })) }],
@@ -234,6 +235,8 @@
       bones.forEach(([a, b]) => { const pa = P(a, i), pb = P(b, i); lines.x.push(pa[0], pb[0], null); lines.y.push(pa[1], pb[1], null); lines.z.push(pa[2], pb[2], null); });
       return [{ x: pts.map(p => p[0]), y: pts.map(p => p[1]), z: pts.map(p => p[2]), text: bodies }, lines];
     };
+    frameDuration = 60;
+    const LEGEND_N = 2;
     const frames = used.map(i => ({ name: String(i), data: frameData(i), layout: { title: { text: title(r, `skeleton, ${d.t[i].toFixed(2)} s`) } } }));
     const f0 = frameData(used[0]);
     const traces = [{ type: "scatter3d", mode: "markers+text", name: "rigid bodies", textposition: "top center", textfont: { size: 10 },
@@ -251,10 +254,7 @@
       scene: { xaxis: { range: [cx - half, cx + half], title: "X side (m)", ...grid() }, yaxis: { range: [cy - half, cy + half], title: "Z front (m)", ...grid() },
                zaxis: { range: [0, zTop], title: "Y up (m)", ...grid() },
                aspectmode: "manual", aspectratio: { x: 1, y: 1, z: zTop / (2 * half) }, camera: { eye: { x: 1.3, y: -1.9, z: 0.6 } } },
-      legend: { orientation: "h", x: 1, xanchor: "right", y: 1.02, yanchor: "bottom", itemsizing: "constant" }, margin: { l: 20, r: 20, t: 120, b: 90 },
-      updatemenus: [{ type: "buttons", direction: "right", x: 0, y: 1.02, xanchor: "left", yanchor: "bottom", showactive: false, pad: { r: 6 }, buttons: [
-        { label: "Play", method: "animate", args: [null, { frame: { duration: 60, redraw: true }, fromcurrent: true, transition: { duration: 0 } }] },
-        { label: "Pause", method: "animate", args: [[null], { mode: "immediate", frame: { duration: 0, redraw: false } }] }] }],
+      legend: { orientation: "h", x: 0, xanchor: "left", y: 1.02, yanchor: "bottom", itemsizing: "constant" }, margin: { l: 20, r: 20, t: topMargin(LEGEND_N), b: 90 },
       sliders: [{ x: 0, len: 1, y: 0, yanchor: "top", pad: { t: 24 }, currentvalue: { visible: false },
         steps: frames.map((f, j) => ({ label: d.t[used[j]].toFixed(1), method: "animate", args: [[f.name], { mode: "immediate", frame: { duration: 0, redraw: true }, transition: { duration: 0 } }] })) }] };
     return { traces, layout, frames };
@@ -298,7 +298,9 @@
   }
 
   // ---- draw ----------------------------------------------------------------
-  let busy = false;
+  let busy = false, frameDuration = 60;
+  function play() { Plotly.animate(plot, null, { frame: { duration: frameDuration, redraw: true }, fromcurrent: true, transition: { duration: 0 } }); }
+  function pause() { Plotly.animate(plot, [null], { mode: "immediate", frame: { duration: 0, redraw: false } }); }
   async function draw() {
     if (busy) return; busy = true;
     const r = row(), mod = sel.modality.value, view = sel.view.value, win = window_();
@@ -313,6 +315,8 @@
       else out = imuView(r, d, view, win);
       await Plotly.newPlot(plot, out.traces, out.layout, { responsive: true, displaylogo: false });
       if (out.frames) await Plotly.addFrames(plot, out.frames);
+      $("x-play").style.display = out.frames ? "" : "none";
+      $("x-pause").style.display = out.frames ? "" : "none";
       status.textContent = `${MOD_LABEL[mod]} of ${r.campaign} / ${r.user} / ${r.class}, read from ${R.zipName(r, mod)} in this page.`;
     } catch (err) {
       status.textContent = `Cannot draw: ${err.message}`;
@@ -324,6 +328,7 @@
   sel.campaign.onchange = onCampaign; sel.user.onchange = onUser; sel.cls.onchange = onClass;
   sel.modality.onchange = onModality; sel.view.onchange = draw; sel.radars.onchange = draw;
   $("x-draw").onclick = draw;
+  $("x-play").onclick = play; $("x-pause").onclick = pause;
   sel.start.oninput = showWindow; sel.end.oninput = showWindow;
   sel.start.onchange = draw; sel.end.onchange = draw;
   onCampaign();

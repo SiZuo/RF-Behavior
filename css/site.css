@@ -46,6 +46,14 @@ header.top .wrap { display: flex; align-items: center; gap: 24px; height: 60px; 
 .brand { font-weight: 700; font-size: 17px; color: var(--ink); display: flex; align-items: center; gap: 10px; }
 .brand .dot { width: 12px; height: 12px; background: var(--accent); border-radius: 3px; display: inline-block; }
 nav.menu { margin-left: auto; display: flex; gap: 18px; font-size: 14px; }
+.top-logos { display: flex; align-items: center; gap: 14px; margin-left: 18px; }
+.top-logos img { height: 44px; width: auto; display: block; }
+.top-logos img.group { height: 26px; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .top-logos img { background: #fff; padding: 3px 5px; border-radius: 4px; }
+}
+:root[data-theme="dark"] .top-logos img { background: #fff; padding: 3px 5px; border-radius: 4px; }
+@media (max-width: 720px) { .top-logos { margin-left: auto; } .top-logos img { height: 34px; } .top-logos img.group { height: 20px; } }
 nav.menu a { color: var(--ink-2); }
 nav.menu a:hover { color: var(--ink); text-decoration: none; }
 @media (max-width: 720px) { nav.menu { display: none; } }
@@ -103,6 +111,7 @@ select { font: inherit; font-size: 14px; color: var(--ink); background: var(--bg
 .controls input { font: inherit; font-size: 14px; color: var(--ink); background: var(--bg); border: 1px solid var(--line);
                   border-radius: 6px; padding: 7px 8px; width: 100%; }
 .controls .btn { align-self: end; justify-content: center; }
+.btn-row { flex-direction: row; align-items: end; gap: 8px; }
 .plot { margin-top: 18px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; min-height: 520px;
         padding: 6px; }
 .status { color: var(--muted); font-size: 13px; margin-top: 8px; }
