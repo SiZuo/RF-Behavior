@@ -147,7 +147,10 @@
                zaxis: { range: [0, ceiling + 0.5], title: "z (m)", ...grid() }, aspectmode: "manual",
                aspectratio: { x: 1, y: 1, z: (ceiling + 0.5) / 9 }, camera: { eye: { x: 1.4, y: -1.6, z: 0.9 } } },
       legend: { orientation: "h", x: 0, xanchor: "left", y: 1.02, yanchor: "bottom", itemsizing: "constant" }, margin: { l: 20, r: 20, t: topMargin(LEGEND_N), b: 90 },
-      sliders: [{ x: 0, len: 1, y: 0, yanchor: "top", pad: { t: 24 }, currentvalue: { visible: false },
+      updatemenus: [{ type: "buttons", x: 0, xanchor: "left", y: 0, yanchor: "top", pad: { t: 14 }, showactive: false,
+                      bgcolor: dark() ? "#1a1e23" : "#ffffff", bordercolor: dark() ? "#2a2f36" : "#e4e5e8", font: { size: 13 },
+                      buttons: [{ label: " ▶ ", method: "skip" }] }],   // one play/pause button, handled in draw()
+      sliders: [{ x: 0.08, len: 0.92, y: 0, yanchor: "top", pad: { t: 24 }, currentvalue: { visible: false },
         steps: frames.map((f, i) => ({ label: (tMin + i * step).toFixed(1), method: "animate",
           args: [[f.name], { mode: "immediate", frame: { duration: 0, redraw: true }, transition: { duration: 0 } }] })) }],
     };
@@ -255,7 +258,10 @@
                zaxis: { range: [0, zTop], title: "Y up (m)", ...grid() },
                aspectmode: "manual", aspectratio: { x: 1, y: 1, z: zTop / (2 * half) }, camera: { eye: { x: 1.3, y: -1.9, z: 0.6 } } },
       legend: { orientation: "h", x: 0, xanchor: "left", y: 1.02, yanchor: "bottom", itemsizing: "constant" }, margin: { l: 20, r: 20, t: topMargin(LEGEND_N), b: 90 },
-      sliders: [{ x: 0, len: 1, y: 0, yanchor: "top", pad: { t: 24 }, currentvalue: { visible: false },
+      updatemenus: [{ type: "buttons", x: 0, xanchor: "left", y: 0, yanchor: "top", pad: { t: 14 }, showactive: false,
+                      bgcolor: dark() ? "#1a1e23" : "#ffffff", bordercolor: dark() ? "#2a2f36" : "#e4e5e8", font: { size: 13 },
+                      buttons: [{ label: " ▶ ", method: "skip" }] }],   // one play/pause button, handled in draw()
+      sliders: [{ x: 0.08, len: 0.92, y: 0, yanchor: "top", pad: { t: 24 }, currentvalue: { visible: false },
         steps: frames.map((f, j) => ({ label: d.t[used[j]].toFixed(1), method: "animate", args: [[f.name], { mode: "immediate", frame: { duration: 0, redraw: true }, transition: { duration: 0 } }] })) }] };
     return { traces, layout, frames };
   }
@@ -298,9 +304,11 @@
   }
 
   // ---- draw ----------------------------------------------------------------
-  let busy = false, frameDuration = 60;
-  function play() { Plotly.animate(plot, null, { frame: { duration: frameDuration, redraw: true }, fromcurrent: true, transition: { duration: 0 } }); }
-  function pause() { Plotly.animate(plot, [null], { mode: "immediate", frame: { duration: 0, redraw: false } }); }
+  let busy = false, frameDuration = 60, playing = false;
+  const setLabel = () => Plotly.relayout(plot, { "updatemenus[0].buttons[0].label": playing ? " ❚❚ " : " ▶ " });
+  function play() { playing = true; setLabel(); Plotly.animate(plot, null, { frame: { duration: frameDuration, redraw: true }, fromcurrent: true, transition: { duration: 0 } }); }
+  function pause() { playing = false; setLabel(); Plotly.animate(plot, [null], { mode: "immediate", frame: { duration: 0, redraw: false } }); }
+  function togglePlay() { if (playing) pause(); else play(); }
   async function draw() {
     if (busy) return; busy = true;
     const r = row(), mod = sel.modality.value, view = sel.view.value, win = window_();
@@ -314,9 +322,13 @@
       else if (mod === "mocap") out = view.startsWith("skeleton") ? mocapSkeleton(r, d, win) : mocapSpeed(r, d, win);
       else out = imuView(r, d, view, win);
       await Plotly.newPlot(plot, out.traces, out.layout, { responsive: true, displaylogo: false });
-      if (out.frames) await Plotly.addFrames(plot, out.frames);
-      $("x-play").style.display = out.frames ? "" : "none";
-      $("x-pause").style.display = out.frames ? "" : "none";
+      playing = false;
+      if (out.frames) {
+        await Plotly.addFrames(plot, out.frames);
+        plot.on("plotly_buttonclicked", togglePlay);
+        plot.on("plotly_animated", () => { if (playing) { playing = false; setLabel(); } });   // the end of the frames
+        plot.on("plotly_sliderstart", () => { if (playing) pause(); });   // a drag by the user stops the play
+      }
       status.textContent = `${MOD_LABEL[mod]} of ${r.campaign} / ${r.user} / ${r.class}, read from ${R.zipName(r, mod)} in this page.`;
     } catch (err) {
       status.textContent = `Cannot draw: ${err.message}`;
@@ -328,7 +340,6 @@
   sel.campaign.onchange = onCampaign; sel.user.onchange = onUser; sel.cls.onchange = onClass;
   sel.modality.onchange = onModality; sel.view.onchange = draw; sel.radars.onchange = draw;
   $("x-draw").onclick = draw;
-  $("x-play").onclick = play; $("x-pause").onclick = pause;
   sel.start.oninput = showWindow; sel.end.oninput = showWindow;
   sel.start.onchange = draw; sel.end.onchange = draw;
   onCampaign();
