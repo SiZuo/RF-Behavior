@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RF-Behavior dataset</title>
-<meta name="description" content="RF-Behavior: a multimodal radio-frequency dataset for human behavior and emotion analysis. 44 participants, 13 mmWave radars, LoRa, RFID, motion capture, IMUs.">
+<meta name="description" content="RF-Behavior: a multimodal radio-frequency dataset for human behavior and emotion analysis. 61 participants, 13 mmWave radars, LoRa, RFID, motion capture, IMUs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
@@ -53,7 +53,7 @@
         Reader scripts</a>
     </div>
     <div class="stats">
-      <div class="stat"><b>44</b><span>participants</span></div>
+      <div class="stat"><b>61</b><span>participants: 44 in the laboratory, 17 more in a living room and an industrial site</span></div>
       <div class="stat"><b>37</b><span>classes: 21 gestures, 10 activities, 6 sentiments</span></div>
       <div class="stat"><b>5</b><span>sensing modalities, recorded at the same time</span></div>
       <div class="stat"><b>13</b><span>mmWave radars: 8 ground, 5 ceiling</span></div>
@@ -136,7 +136,7 @@ scripts/ readers, loader, download script</code></pre>
       <tr><td>1 laboratory</td><td>radar, LoRa, RFID, motion capture, IMU (C3)</td><td class="num">29</td><td class="num">6,410</td><td class="num">25,440</td></tr>
       <tr><td>2 living room</td><td>radar, IMU</td><td class="num">17</td><td class="num">2,172</td><td class="num">4,339</td></tr>
       <tr><td>3 industrial site</td><td>radar, IMU</td><td class="num">9</td><td class="num">1,182</td><td class="num">2,359</td></tr>
-      <tr><td><b>Total</b></td><td></td><td class="num">48</td><td class="num">9,764</td><td class="num">32,138 (1.7 GB)</td></tr>
+      <tr><td><b>Total</b></td><td></td><td class="num">46</td><td class="num">9,764</td><td class="num">32,138 (1.7 GB)</td></tr>
     </table>
     <table style="margin-top:18px">
       <tr><th>Segments (one per trial and modality; one per radar file)</th><th>Total segments</th></tr>
@@ -162,6 +162,7 @@ scripts/ readers, loader, download script</code></pre>
       transforms as the reader scripts: the radar point cloud in the room, the LoRa features, the motion of the RFID
       tags, the motion-capture skeleton, and the IMU signals. Nothing is sent to a server.</p>
     <div class="controls">
+      <label class="ctl">Environment <select id="x-env"></select></label>
       <label class="ctl">Campaign <select id="x-campaign"></select></label>
       <label class="ctl">Participant <select id="x-user"></select></label>
       <label class="ctl">Class <select id="x-cls"></select></label>
@@ -183,10 +184,11 @@ scripts/ readers, loader, download script</code></pre>
 <section id="gallery" class="alt">
   <div class="wrap">
     <p class="kicker">Gallery</p>
-    <h2>One participant, every class, every modality</h2>
-    <p class="lead">Figures made by the reader scripts of the dataset. Pick a campaign, a class, a modality, and a
-      view. Radar views can show all radars or the ground radars only.</p>
+    <h2>One participant per environment, every class, every modality</h2>
+    <p class="lead">Figures made by the reader scripts of the dataset. Pick an environment, a campaign, a class, a
+      modality, and a view. Radar views can show all radars or the ground radars only.</p>
     <div class="controls">
+      <label class="ctl">Environment <select id="env"></select></label>
       <label class="ctl">Campaign <select id="campaign"></select></label>
       <label class="ctl">Participant <select id="user"></select></label>
       <label class="ctl">Class <select id="cls"></select></label>

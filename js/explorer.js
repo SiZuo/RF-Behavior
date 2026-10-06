@@ -2,7 +2,7 @@
 (async function () {
   const R = RFBReaders;
   const $ = id => document.getElementById(id);
-  const sel = { campaign: $("x-campaign"), user: $("x-user"), cls: $("x-cls"), modality: $("x-modality"),
+  const sel = { env: $("x-env"), campaign: $("x-campaign"), user: $("x-user"), cls: $("x-cls"), modality: $("x-modality"),
                 view: $("x-view"), radars: $("x-radars"), start: $("x-start"), end: $("x-end") };
   const status = $("x-status"), plot = $("x-plot");
   const MOD_LABEL = { radar: "Radar", lora: "LoRa", rfid: "RFID", mocap: "Motion capture", imu: "IMU" };
@@ -37,12 +37,17 @@
     if (keep && options.some(([, v]) => v === old)) select.value = old;
   }
   const uniq = xs => [...new Set(xs)];
-  const row = () => trials.find(t => t.campaign === sel.campaign.value && t.user === sel.user.value && t.class === sel.cls.value);
+  const inEnv = () => trials.filter(t => t.environment_id === sel.env.value);
+  const row = () => inEnv().find(t => t.campaign === sel.campaign.value && t.user === sel.user.value && t.class === sel.cls.value);
+  function onEnv() {
+    const cs = uniq(inEnv().map(t => t.campaign));
+    fill(sel.campaign, cs.map(c => [`${c} ${inEnv().find(t => t.campaign === c).campaign_name}`, c]), true); onCampaign();
+  }
   function onCampaign() {
-    fill(sel.user, uniq(trials.filter(t => t.campaign === sel.campaign.value).map(t => t.user)).map(u => [u, u]), true); onUser();
+    fill(sel.user, uniq(inEnv().filter(t => t.campaign === sel.campaign.value).map(t => t.user)).map(u => [u, u]), true); onUser();
   }
   function onUser() {
-    const ts = trials.filter(t => t.campaign === sel.campaign.value && t.user === sel.user.value);
+    const ts = inEnv().filter(t => t.campaign === sel.campaign.value && t.user === sel.user.value);
     fill(sel.cls, ts.map(t => [`${t.class}  ${t.class_name}`, t.class]), true); onClass();
   }
   function onClass() {
@@ -336,11 +341,13 @@
     } finally { busy = false; }
   }
 
-  fill(sel.campaign, uniq(trials.map(t => t.campaign)).map(c => [`${c} ${trials.find(t => t.campaign === c).campaign_name}`, c]));
-  sel.campaign.onchange = onCampaign; sel.user.onchange = onUser; sel.cls.onchange = onClass;
+  const envs = [];
+  trials.forEach(t => { if (!envs.some(e => e[1] === t.environment_id)) envs.push([t.environment, t.environment_id]); });
+  fill(sel.env, envs);
+  sel.env.onchange = onEnv; sel.campaign.onchange = onCampaign; sel.user.onchange = onUser; sel.cls.onchange = onClass;
   sel.modality.onchange = onModality; sel.view.onchange = draw; sel.radars.onchange = draw;
   $("x-draw").onclick = draw;
   sel.start.oninput = showWindow; sel.end.oninput = showWindow;
   sel.start.onchange = draw; sel.end.onchange = draw;
-  onCampaign();
+  onEnv();
 })();
