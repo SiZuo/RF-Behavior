@@ -132,17 +132,20 @@ imu/     x_imu_1_3_E01_1_20250720180733.zip      Chest_acc_data.csv, Chest_gyro_
 meta/    trials_Lab.csv, classes.csv, nodes.csv, packing_log_Lab.csv
 scripts/ readers, loader, download script</code></pre>
     <table>
-      <tr><th>Laboratory release</th><th>Trials</th><th>Files</th><th>Size</th></tr>
-      <tr><td>C1 gestures, 25 participants</td><td class="num">4,193</td><td class="num" rowspan="3">25,440 zips</td><td class="num" rowspan="3">1.4 GB</td></tr>
-      <tr><td>C2 activities, 26 participants</td><td class="num">2,084</td></tr>
-      <tr><td>C3 sentiments, 23 participants</td><td class="num">133</td></tr>
+      <tr><th>Environment</th><th>Modalities</th><th>Participants</th><th>Trials</th><th>Zips</th></tr>
+      <tr><td>1 laboratory</td><td>radar, LoRa, RFID, motion capture, IMU (C3)</td><td class="num">29</td><td class="num">6,410</td><td class="num">25,440</td></tr>
+      <tr><td>2 living room</td><td>radar, IMU</td><td class="num">17</td><td class="num">2,172</td><td class="num">4,339</td></tr>
+      <tr><td>3 industrial site</td><td>radar, IMU</td><td class="num">9</td><td class="num">1,182</td><td class="num">2,359</td></tr>
+      <tr><td><b>Total</b></td><td></td><td class="num">48</td><td class="num">9,764</td><td class="num">32,138 (1.7 GB)</td></tr>
     </table>
     <table style="margin-top:18px">
       <tr><th>Segments (one per trial and modality; one per radar file)</th><th>Total segments</th></tr>
       <tr><td>C1 gestures</td><td class="num">66,167</td></tr>
       <tr><td>C2 activities</td><td class="num">31,943</td></tr>
       <tr><td>C3 sentiments</td><td class="num">2,258</td></tr>
-      <tr><td><b>Total</b></td><td class="num"><b>100,368</b></td></tr>
+      <tr><td>Living room (radar files, IMU)</td><td class="num">26,947</td></tr>
+      <tr><td>Industrial site (radar files, IMU)</td><td class="num">13,880</td></tr>
+      <tr><td><b>Total</b></td><td class="num"><b>141,195</b></td></tr>
     </table>
     <p style="margin-top:14px">The trial table <code>meta/trials_Lab.csv</code> has one row per trial: participant,
       class, repetition, reference time, ceiling height, and for every modality its presence, start, duration,
