@@ -53,7 +53,7 @@
         Reader scripts</a>
     </div>
     <div class="stats">
-      <div class="stat"><b>61</b><span>participants: 44 in the laboratory, 17 more in a living room and an industrial site</span></div>
+      <div class="stat"><b>61 + 7</b><span>participants: 44 in the laboratory, 17 more in a living room and an industrial site, 7 in a physiological reference subset</span></div>
       <div class="stat"><b>37</b><span>classes: 21 gestures (also with the RFID antenna at a distance), 10 activities, 6 sentiments</span></div>
       <div class="stat"><b>5</b><span>sensing modalities, recorded at the same time</span></div>
       <div class="stat"><b>13</b><span>mmWave radars: 8 ground, 5 ceiling</span></div>
@@ -86,6 +86,10 @@
       <div class="card"><h3>IMU</h3><p>Movesense sensors on the chest and the limbs at 104 Hz: acceleration,
         angular rate, magnetic field.</p>
         <span class="tag">node x · body-worn</span></div>
+      <div class="card"><h3>ECG and EEG (reference subset)</h3><p>Seven participants of the living room repeated the
+        sentiment protocol with a Shimmer3 ExG ECG (four electrodes, 512 Hz) and a NeuroSky MindWave Mobile EEG (one
+        channel, 512 Hz, with band powers and eSense scores at 1 Hz), next to radar and IMU.</p>
+        <span class="tag">node x · body-worn · folders ecg/ eeg/</span></div>
     </div>
   </div>
 </section>
@@ -135,7 +139,7 @@ scripts/ readers, loader, download script</code></pre>
     <table>
       <tr><th>Environment</th><th>Modalities</th><th>Participants</th><th>Trials</th><th>Zips</th></tr>
       <tr><td>1 laboratory</td><td>radar, LoRa, RFID, motion capture, IMU (C3); C4 RFID only</td><td class="num">44</td><td class="num">17,030</td><td class="num">36,060</td></tr>
-      <tr><td>2 living room</td><td>radar, IMU</td><td class="num">17</td><td class="num">2,172</td><td class="num">4,339</td></tr>
+      <tr><td>2 living room</td><td>radar, IMU; plus ECG and EEG for a physiological reference subset of 7 participants (34 phases)</td><td class="num">17 + 7</td><td class="num">2,172 + 34</td><td class="num">4,339 + 136</td></tr>
       <tr><td>3 industrial site</td><td>radar, IMU</td><td class="num">9</td><td class="num">1,182</td><td class="num">2,359</td></tr>
       <tr><td><b>Total</b></td><td></td><td class="num">61</td><td class="num">20,384</td><td class="num">42,758 (1.7 GB)</td></tr>
     </table>
