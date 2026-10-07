@@ -11,10 +11,10 @@ plain JavaScript.
 | `data/meta/` | `trials_samples.csv`, `classes.csv`, `nodes.csv` |
 | `assets/` | Logos and the setup figure |
 
-Local preview: `python -m http.server 8000` in this folder, then open http://localhost:8000.
+The site is served by GitHub Pages from the `main` branch: https://sizuo.github.io/RF-Behavior/
 
-When the dataset is public, set `DATA_BASE` in `js/config.js` to the Hub URL
-(`https://huggingface.co/datasets/Si-Z/RF-Behavior/resolve/main`) and the page reads
-the full dataset.
+The explorer reads the sample zips in this repository. The dataset repository on the
+Hub is gated (terms must be accepted), so a browser cannot fetch its files without a
+token; `DATA_BASE` in `js/config.js` therefore stays on `data/samples`.
 
 License: MIT for the site; the data samples are CC BY-NC-SA 4.0 (see the dataset card).
