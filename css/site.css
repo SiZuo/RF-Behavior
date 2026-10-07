@@ -132,6 +132,7 @@ select { font: inherit; font-size: 14px; color: var(--ink); background: var(--bg
 
 /* steps and notes */
 ol.steps { padding-left: 20px; } ol.steps li { margin-bottom: 8px; }
+.fine { color: var(--muted); font-size: 13px; margin-top: 6px; }
 .note { border-left: 3px solid var(--accent); background: var(--bg-2); padding: 10px 14px; border-radius: 0 8px 8px 0;
         color: var(--ink-2); font-size: 15px; }
 .copy { float: right; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 6px; cursor: pointer;

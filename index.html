@@ -126,8 +126,8 @@
   <div class="wrap">
     <p class="kicker">Data</p>
     <h2>One zip per trial and modality</h2>
-    <p class="lead">The release follows the OctoNet file convention: flat folders, and one zip for each trial and
-      modality, named <code>&lt;node&gt;_&lt;modality&gt;_&lt;environment&gt;_&lt;user&gt;_&lt;class&gt;_&lt;repetition&gt;_&lt;time&gt;.zip</code>.
+    <p class="lead">The release has flat folders and one zip for each trial and modality (the file convention of the
+      <a href="https://huggingface.co/datasets/hku-aiot/OctoNet">OctoNet</a> dataset), named <code>&lt;node&gt;_&lt;modality&gt;_&lt;environment&gt;_&lt;user&gt;_&lt;class&gt;_&lt;repetition&gt;_&lt;time&gt;.zip</code>.
       The five zips of a trial share the same time stamp.</p>
     <pre><code>radar/   r_radar_1_1_M10_1_20250710163420.zip    radar_00.npz … radar_12.npz
 lora/    5_lora_1_1_M10_1_20250710163420.zip     abs_200Hz.csv, diff_200Hz.csv, var_20Hz.csv
@@ -155,8 +155,10 @@ scripts/ readers, loader, download script</code></pre>
     </table>
     <p style="margin-top:14px">The trial table <code>meta/trials_Lab.csv</code> has one row per trial: participant,
       class, repetition, reference time, ceiling height, and for every modality its presence, start, duration,
-      and extra facts. A Python loader with the OctoNet API (<code>get_dataset</code>, <code>get_dataloader</code>)
-      and a reader with figures for every modality ship with the data.</p>
+      and extra facts. A Python loader and a reader with figures for every modality ship with the data.</p>
+    <p class="fine">Compatibility note: the loader uses the same calls as the loader of the
+      <a href="https://huggingface.co/datasets/hku-aiot/OctoNet">OctoNet</a> dataset (<code>get_dataset</code>,
+      <code>get_dataloader</code>), so code written for OctoNet runs on RF-Behavior with few changes.</p>
   </div>
 </section>
 
