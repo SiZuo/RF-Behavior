@@ -117,6 +117,9 @@ select { font: inherit; font-size: 14px; color: var(--ink); background: var(--bg
 .status { color: var(--muted); font-size: 13px; margin-top: 8px; }
 
 .range-ctl { grid-column: span 2; }
+.controls.source { margin-bottom: 10px; grid-template-columns: minmax(200px, 1fr) minmax(220px, 1.4fr) auto; align-items: end; }
+.controls.source .fine { grid-column: 1 / -1; margin: 0; }
+@media (max-width: 640px) { .controls.source { grid-template-columns: 1fr; } }
 .dual { position: relative; height: 30px; margin-top: 4px; }
 .dual-bar { position: absolute; left: 8px; right: 8px; top: 13px; height: 4px; background: var(--line); border-radius: 2px; }
 .dual-fill { position: absolute; top: 0; height: 100%; background: var(--accent); border-radius: 2px; }

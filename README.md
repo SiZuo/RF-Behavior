@@ -13,8 +13,11 @@ plain JavaScript.
 
 The site is served by GitHub Pages from the `main` branch: https://sizuo.github.io/RF-Behavior/
 
-The explorer reads the sample zips in this repository. The dataset repository on the
-Hub is gated (terms must be accepted), so a browser cannot fetch its files without a
-token; `DATA_BASE` in `js/config.js` therefore stays on `data/samples`.
+The explorer reads the sample zips in this repository (no login). With "whole dataset on
+Hugging Face" and the visitor's own read token it reads any trial of C1 to C3 straight from
+the Hub (`HUB_BASE` in `js/config.js`): the trial tables `meta/trials_*.csv` fill the
+dropdowns, the zips are fetched with the token. The token is kept in the visitor's browser
+only. The Hub repository is gated, thus the samples stay in this repository for visitors
+without a token.
 
 License: MIT for the site; the data samples are CC BY-NC-SA 4.0 (see the dataset card).

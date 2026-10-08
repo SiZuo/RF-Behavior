@@ -20,10 +20,11 @@ window.RFBReaders = (function () {
 
   // ---- files ---------------------------------------------------------------
   function zipName(row, mod) {
-    return `${NODE[mod]}_${mod}_${row.environment_id}_${row.user_id}_${row.class}_${row.trial_id}_${row.timestamp}.zip`;
+    const node = mod === "rfid" && row.rfid_node ? row.rfid_node : NODE[mod];   // C4: the antenna position is the node
+    return `${node}_${mod}_${row.environment_id}_${row.user_id}_${row.class}_${row.trial_id}_${row.timestamp}.zip`;
   }
-  async function fetchZip(url) {
-    const r = await fetch(url);
+  async function fetchZip(url, headers = {}) {
+    const r = await fetch(url, { headers });
     if (!r.ok) throw new Error(`${r.status} ${url}`);
     return fflate.unzipSync(new Uint8Array(await r.arrayBuffer()));
   }

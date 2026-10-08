@@ -179,14 +179,27 @@ scripts/ readers, loader, download script</code></pre>
   <div class="wrap">
     <p class="kicker">Explore</p>
     <h2>Open a trial in your browser</h2>
-    <p class="lead">This page reads the release zips of the sample trials and draws them here, with the same
-      transforms as the reader scripts: the radar point cloud in the room, the LoRa features, the motion of the RFID
-      tags, the motion-capture skeleton, and the IMU signals. Nothing is sent to a server.</p>
+    <p class="lead">This page reads the release zips and draws them here, with the same transforms as the reader
+      scripts: the radar point cloud in the room, the LoRa features, the motion of the RFID tags, the motion-capture
+      skeleton, and the IMU signals. The sample trials come with this page. With your own Hugging Face read token the
+      page reads any trial of the whole dataset straight from the Hub. Nothing is sent to a server of ours.</p>
+    <div class="controls source">
+      <label class="ctl">Data <select id="x-source">
+        <option value="samples">sample trials in this page</option>
+        <option value="hub">whole dataset on Hugging Face</option></select></label>
+      <label class="ctl" id="x-token-label">Hugging Face read token
+        <input id="x-token" type="password" placeholder="hf_…" autocomplete="off" spellcheck="false"></label>
+      <button class="btn" id="x-connect" type="button">Load the trial list</button>
+      <p class="fine" id="x-source-note">Accept the terms on the <a href="https://huggingface.co/datasets/Si-Z/RF-Behavior">dataset page</a>,
+        then make a read token under <a href="https://huggingface.co/settings/tokens">Settings › Access Tokens</a>.
+        The token stays in this browser and goes only to huggingface.co. C4 (RFID at antenna distances) has no view here.</p>
+    </div>
     <div class="controls">
       <label class="ctl">Environment <select id="x-env"></select></label>
       <label class="ctl">Campaign <select id="x-campaign"></select></label>
       <label class="ctl">Participant <select id="x-user"></select></label>
       <label class="ctl">Class <select id="x-cls"></select></label>
+      <label class="ctl">Repetition <select id="x-rep"></select></label>
       <label class="ctl">Modality <select id="x-modality"></select></label>
       <label class="ctl">View <select id="x-view"></select></label>
       <label class="ctl" id="x-radars-label">Radars <select id="x-radars"></select></label>

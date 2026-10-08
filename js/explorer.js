@@ -2,8 +2,9 @@
 (async function () {
   const R = RFBReaders;
   const $ = id => document.getElementById(id);
-  const sel = { env: $("x-env"), campaign: $("x-campaign"), user: $("x-user"), cls: $("x-cls"), modality: $("x-modality"),
-                view: $("x-view"), radars: $("x-radars"), start: $("x-start"), end: $("x-end") };
+  const sel = { env: $("x-env"), campaign: $("x-campaign"), user: $("x-user"), cls: $("x-cls"), rep: $("x-rep"),
+                modality: $("x-modality"), view: $("x-view"), radars: $("x-radars"), start: $("x-start"), end: $("x-end"),
+                source: $("x-source"), token: $("x-token") };
   const status = $("x-status"), plot = $("x-plot");
   const MOD_LABEL = { radar: "Radar", lora: "LoRa", rfid: "RFID", mocap: "Motion capture", imu: "IMU" };
   const VIEWS = {
@@ -27,8 +28,52 @@
   const topMargin = n => 60 + Math.ceil(n * 100 / Math.max(300, plot.clientWidth - 60)) * 22;
   const grid = () => ({ gridcolor: dark() ? "#2a2f36" : "#e4e5e8", zerolinecolor: dark() ? "#2a2f36" : "#e4e5e8" });
 
-  const trials = R.parseTable(await (await fetch(`${RFB.META_BASE}/trials_samples.csv`)).text());
+  // ---- data source: the samples in this page, or the whole dataset on the Hub with the visitor's token ----
+  const samples = R.parseTable(await (await fetch(`${RFB.META_BASE}/trials_samples.csv`)).text());
+  let trials = samples, hubTrials = null, source = "samples";
   const cache = {};
+  const TOKEN_KEY = "rfb_hf_token";
+  try { sel.token.value = localStorage.getItem(TOKEN_KEY) || ""; } catch (e) { /* storage blocked: the field stays empty */ }
+  const headers = () => source === "hub" ? { Authorization: `Bearer ${sel.token.value.trim()}` } : {};
+  const dataUrl = key => `${source === "hub" ? RFB.HUB_BASE : RFB.DATA_BASE}/${key}`;
+  function explain(err) {
+    const m = /^(\d{3}) /.exec(err.message);
+    if (m && m[1] === "401") return "the Hub refused the token (401). Check the token, and accept the terms on the dataset page first.";
+    if (m && m[1] === "403") return "no access yet (403). Accept the terms on the dataset page, then try again.";
+    if (m) return `the Hub answered ${m[1]}.`;
+    if (err instanceof TypeError) return "no answer from the Hub (network or browser block).";
+    return err.message;
+  }
+  async function connect() {
+    const token = sel.token.value.trim();
+    if (!token) { status.textContent = "Paste a Hugging Face read token first."; return; }
+    status.textContent = "Loading the trial tables from Hugging Face …";
+    $("x-connect").disabled = true;
+    try {
+      const texts = await Promise.all(RFB.HUB_TABLES.map(async f => {
+        const r = await fetch(`${RFB.HUB_BASE}/${f}`, { headers: { Authorization: `Bearer ${token}` } });
+        if (!r.ok) throw new Error(`${r.status} ${f}`);
+        return r.text();
+      }));
+      hubTrials = texts.flatMap(t => R.parseTable(t)).filter(t => t.campaign !== "C4");   // C4 has no view in this page
+      try { localStorage.setItem(TOKEN_KEY, token); } catch (e) { /* fine without */ }
+      trials = hubTrials; source = "hub";
+      fillEnvs(); onEnv();
+      status.textContent = `Whole dataset: ${trials.length.toLocaleString()} trials of C1 to C3 in three environments. Pick a trial and press Draw.`;
+    } catch (err) {
+      status.textContent = `Cannot load the trial tables: ${explain(err)}`;
+      console.error(err);
+    } finally { $("x-connect").disabled = false; }
+  }
+  function onSource() {
+    const hub = sel.source.value === "hub";
+    $("x-token-label").style.display = hub ? "" : "none";
+    $("x-connect").style.display = hub ? "" : "none";
+    $("x-source-note").style.display = hub ? "" : "none";
+    if (!hub) { trials = samples; source = "samples"; fillEnvs(); onEnv(); status.textContent = ""; }
+    else if (hubTrials) { trials = hubTrials; source = "hub"; fillEnvs(); onEnv(); }
+    else status.textContent = "Paste your read token and load the trial list.";
+  }
 
   // ---- choices -------------------------------------------------------------
   function fill(select, options, keep) {
@@ -38,17 +83,26 @@
   }
   const uniq = xs => [...new Set(xs)];
   const inEnv = () => trials.filter(t => t.environment_id === sel.env.value);
-  const row = () => inEnv().find(t => t.campaign === sel.campaign.value && t.user === sel.user.value && t.class === sel.cls.value);
+  const row = () => inEnv().find(t => t.campaign === sel.campaign.value && t.user === sel.user.value && t.class === sel.cls.value
+                                     && t.repetition === sel.rep.value);
+  const byNum = (a, b) => parseInt(a, 10) - parseInt(b, 10);
   function onEnv() {
     const cs = uniq(inEnv().map(t => t.campaign));
     fill(sel.campaign, cs.map(c => [`${c} ${inEnv().find(t => t.campaign === c).campaign_name}`, c]), true); onCampaign();
   }
   function onCampaign() {
-    fill(sel.user, uniq(inEnv().filter(t => t.campaign === sel.campaign.value).map(t => t.user)).map(u => [u, u]), true); onUser();
+    const users = uniq(inEnv().filter(t => t.campaign === sel.campaign.value).map(t => t.user)).sort();
+    fill(sel.user, users.map(u => [u, u]), true); onUser();
   }
   function onUser() {
     const ts = inEnv().filter(t => t.campaign === sel.campaign.value && t.user === sel.user.value);
-    fill(sel.cls, ts.map(t => [`${t.class}  ${t.class_name}`, t.class]), true); onClass();
+    const classes = uniq(ts.map(t => t.class)).sort();
+    fill(sel.cls, classes.map(c => [`${c}  ${ts.find(t => t.class === c).class_name}`, c]), true); onRepList();
+  }
+  function onRepList() {
+    const reps = uniq(inEnv().filter(t => t.campaign === sel.campaign.value && t.user === sel.user.value && t.class === sel.cls.value)
+                        .map(t => t.repetition)).sort(byNum);
+    fill(sel.rep, reps.map(r => [r, r]), true); onClass();
   }
   function onClass() {
     const r = row();
@@ -100,10 +154,11 @@
 
   // ---- data ----------------------------------------------------------------
   async function load(r, mod) {
-    const key = `${mod}/${R.zipName(r, mod)}`;
+    const folder = mod === "rfid" && r.rfid_node && r.rfid_node !== "13" ? `rfid_${r.rfid_node}` : mod;
+    const key = `${source}:${folder}/${R.zipName(r, mod)}`;
     if (!cache[key]) {
       status.textContent = `Loading ${key} …`;
-      const entries = await R.fetchZip(`${RFB.DATA_BASE}/${key}`);
+      const entries = await R.fetchZip(dataUrl(key.slice(source.length + 1)), headers());
       cache[key] = mod === "radar" ? R.readRadar(entries, parseFloat(r.ceiling_radar_height_m))
                  : mod === "lora" ? R.readLora(entries)
                  : mod === "rfid" ? R.readRfid(entries)
@@ -334,18 +389,26 @@
         plot.on("plotly_animated", () => { if (playing) { playing = false; setLabel(); } });   // the end of the frames
         plot.on("plotly_sliderstart", () => { if (playing) pause(); });   // a drag by the user stops the play
       }
-      status.textContent = `${MOD_LABEL[mod]} of ${r.campaign} / ${r.user} / ${r.class}, read from ${R.zipName(r, mod)} in this page.`;
+      status.textContent = `${MOD_LABEL[mod]} of ${r.campaign} / ${r.user} / ${r.class}, repetition ${r.repetition}, read from `
+        + `${R.zipName(r, mod)} ${source === "hub" ? "on Hugging Face" : "in this page"}.`;
     } catch (err) {
-      status.textContent = `Cannot draw: ${err.message}`;
+      status.textContent = `Cannot draw: ${explain(err)}`;
       console.error(err);
     } finally { busy = false; }
   }
 
-  const envs = [];
-  trials.forEach(t => { if (!envs.some(e => e[1] === t.environment_id)) envs.push([t.environment, t.environment_id]); });
-  fill(sel.env, envs);
-  sel.env.onchange = onEnv; sel.campaign.onchange = onCampaign; sel.user.onchange = onUser; sel.cls.onchange = onClass;
-  sel.modality.onchange = onModality; sel.view.onchange = draw; sel.radars.onchange = draw;
+  function fillEnvs() {
+    const envs = [];
+    trials.forEach(t => { if (!envs.some(e => e[1] === t.environment_id)) envs.push([t.environment, t.environment_id]); });
+    envs.sort((a, b) => byNum(a[1], b[1]));
+    fill(sel.env, envs, true);
+  }
+  fillEnvs();
+  sel.env.onchange = onEnv; sel.campaign.onchange = onCampaign; sel.user.onchange = onUser; sel.cls.onchange = onRepList;
+  sel.rep.onchange = onClass; sel.modality.onchange = onModality; sel.view.onchange = draw; sel.radars.onchange = draw;
+  sel.source.onchange = onSource; $("x-connect").onclick = connect;
+  sel.token.onkeydown = e => { if (e.key === "Enter") connect(); };
+  onSource();
   $("x-draw").onclick = draw;
   sel.start.oninput = showWindow; sel.end.oninput = showWindow;
   sel.start.onchange = draw; sel.end.onchange = draw;
