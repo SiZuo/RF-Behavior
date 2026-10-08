@@ -1,0 +1,69 @@
+user,gender,age_range,arm_length_cm,laboratory,living_room,industrial_site,note
+U01,F,41-50,57,C1 C2,,,
+U02,F,21-30,57,C4,,,
+U03,M,21-30,58,C1 C2 C3,,,
+U04,M,21-30,54,C1 C2 C3,,,
+U05,M,21-30,54,C1 C2,,,
+U06,M,21-30,58,C1 C2 C3,,,
+U07,F,21-30,53,C1 C2 C3,,,
+U08,F,21-30,52,C3,,,
+U09,M,21-30,62,C4,,,
+U10,M,<18,43,C1 C2 C3,,,
+U11,F,21-30,50,C1 C2 C3,,,
+U12,F,31-40,58,C1 C2 C3,,,
+U13,M,21-30,56,C2 C3,,,
+U14,F,18-20,52,C1 C2 C3,,,
+U15,M,21-30,62,C4,,,
+U16,M,21-30,64,C4,,,
+U17,M,21-30,52,C1 C2 C3,,,
+U18,M,21-30,70,C4,,,
+U19,F,<18,55,C1 C2,C2,,
+U20,F,21-30,67,C4,,,
+U21,M,21-30,52,C1 C2 C3,,,
+U22,M,21-30,58,C1 C2 C3,,,
+U23,F,21-30,58,C4,,,
+U24,M,21-30,57,C3 C4,C2,,
+U25,M,<18,39,C1 C2 C3,,,
+U26,M,21-30,64,C4,,,
+U27,M,21-30,70,C4,,,
+U28,M,41-50,55,C1 C2 C4,C2,,
+U29,F,31-40,49,C1 C2 C3,,,
+U30,M,21-30,53,C2 C3,,,
+U31,F,21-30,57,C4,,,
+U32,M,21-30,59,C1 C2 C3,,,
+U33,F,21-30,48,C1 C2 C3,,,
+U34,F,21-30,52,C4,,,
+U35,M,18-20,50,C1 C2 C3,,,
+U36,M,21-30,,C1,,,arm length not recorded
+U37,M,21-30,67,C4,,,
+U38,M,21-30,57,C1 C2 C3,,,
+U39,M,21-30,74,C4,,,
+U40,M,21-30,75,C4,,,
+U41,F,21-30,54,C1 C2 C3,,,
+U42,F,21-30,52,C1 C2,,,
+U43,F,21-30,61,C4,,,
+U44,M,21-30,56,C1 C2 C3,,,
+U45,F,21-30,53.5,,C1,,
+U46,F,31-40,51.0,,C1,,
+U47,F,31-40,,,C1 C2,C1,arm length not recorded
+U48,M,41-50,56.0,,C1 C2 C3,C1,
+U49,F,21-30,59.5,,C1,,
+U50,F,31-40,63.5,,C1 C2 C3,C1 C2,
+U51,M,21-30,57.0,,C1,,
+U52,F,21-30,50.2,,C1,,
+U53,F,41-50,,,C2 C3,C1,arm length not recorded
+U54,F,21-30,45.5,,C2 C3,,
+U55,F,18-20,52.0,,,C3,
+U56,F,21-30,55.0,,C1,C3,
+U57,M,21-30,58.5,,C1,,
+U58,F,21-30,53.0,,C3,C2,
+U59,F,21-30,57.0,,C3,,
+U60,F,,,,,C1,age not recorded; arm length not recorded
+U61,F,,56.0,,,C1,age not recorded
+U62,,,,,C3,,physiological reference subset; gender and age not recorded
+U63,,,,,C3,,physiological reference subset; gender and age not recorded
+U64,,,,,C3,,physiological reference subset; gender and age not recorded
+U65,,,,,C3,,physiological reference subset; gender and age not recorded
+U66,,,,,C3,,physiological reference subset; gender and age not recorded
+U67,,,,,C3,,physiological reference subset; gender and age not recorded
+U68,,,,,C3,,physiological reference subset; gender and age not recorded
