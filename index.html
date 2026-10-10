@@ -270,6 +270,9 @@ sample = dataset[0]
 sample["class_name"]                     # 'arms swing'
 sample["modality_data"]["radar"][5]["points"]
 loader = get_dataloader(dataset, batch_size=4)</code></pre>
+        <p>A stand-alone demo folder, <a href="https://github.com/SiZuo/RF-Behavior/tree/main/rf_behavior_sync_pipeline">rf_behavior_sync_pipeline</a>
+          on GitHub, downloads a selection with a <code>config.json</code> and draws it in a notebook (same calls as the
+          OctoNet demo).</p>
         <p>To draw a trial with the reader scripts, put the download into the recording layout first:</p>
         <pre><code>python unpack_release.py --download ./RF-Behavior --out ./RF-Behavior_unpacked
 python Radar/read_vis.py --root ./RF-Behavior_unpacked/Lab/Radar     --view animation --campaign C2 --user U01 --cls A01</code></pre>
