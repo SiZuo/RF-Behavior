@@ -54,7 +54,7 @@
     </div>
     <div class="stats">
       <div class="stat"><b>61 + 7</b><span>participants: 44 in the laboratory, 17 more in a living room and an industrial site, 7 in a physiological reference subset</span></div>
-      <div class="stat"><b>37</b><span>classes: 21 gestures (also with the RFID antenna at a distance), 10 activities, 6 sentiments</span></div>
+      <div class="stat"><b>37</b><span>classes: 21 gestures (also with the RFID antenna at a distance), 10 activities, 6 affective states</span></div>
       <div class="stat"><b>5</b><span>sensing modalities, recorded at the same time</span></div>
       <div class="stat"><b>13</b><span>mmWave radars: 8 ground, 5 ceiling</span></div>
       <div class="stat"><b>3</b><span>environments: laboratory, living room, industry</span></div>
@@ -67,7 +67,7 @@
     <p class="kicker">Overview</p>
     <h2>Five radio-frequency and reference modalities, one clock</h2>
     <p class="lead">Participants performed hand and arm gestures, daily activities, and expressions of six
-      sentiments while 13 mmWave radars, a LoRa link, passive RFID tags on the arms, body-worn IMUs, and a
+      affective states while 13 mmWave radars, a LoRa link, passive RFID tags on the arms, body-worn IMUs, and a
       24-camera infrared motion-capture system recorded them at the same time. The motion capture gives the
       reference of body motion for every radio-frequency signal.</p>
     <div class="cards">
@@ -81,13 +81,13 @@
         read by an Impinj Speedway R420. Time stamp, tag, RSSI, and phase of every read.</p>
         <span class="tag">node 13 · antenna on radar 5</span></div>
       <div class="card"><h3>Motion capture</h3><p>24 infrared cameras at 100 Hz. Position and rotation of the
-        rigid bodies of the suit: chest, arms; in activities and sentiments also hips and legs.</p>
+        rigid bodies of the suit: chest, arms; in activities and affective states also hips and legs.</p>
         <span class="tag">node 14 · reference of body motion</span></div>
       <div class="card"><h3>IMU</h3><p>Movesense sensors on the chest and the limbs at 104 Hz: acceleration,
         angular rate, magnetic field.</p>
         <span class="tag">node x · body-worn</span></div>
       <div class="card"><h3>ECG and EEG (reference subset)</h3><p>Seven participants of the living room repeated the
-        sentiment protocol with a Shimmer3 ExG ECG (four electrodes, 512 Hz) and a NeuroSky MindWave Mobile EEG (one
+      affective-state protocol with a Shimmer3 ExG ECG (four electrodes, 512 Hz) and a NeuroSky MindWave Mobile EEG (one
         channel, 512 Hz, with band powers and eSense scores at 1 Hz), next to radar and IMU.</p>
         <span class="tag">node x · body-worn · folders ecg/ eeg/</span></div>
     </div>
@@ -112,7 +112,7 @@
           <tr><th>Campaign</th><th>Classes</th><th>Length</th></tr>
           <tr><td>C1 gestures</td><td>21 hand and arm gestures (raise, push, pull, swipe, throw, circles, …)</td><td class="num">3.5 s</td></tr>
           <tr><td>C2 activities</td><td>walking, running, sitting, lying, stairs, basketball, badminton, floorball, football</td><td class="num">6 s</td></tr>
-          <tr><td>C3 sentiments</td><td>focus, distraction, stress, relaxation, depression, excitement</td><td class="num">2.5 min</td></tr>
+          <tr><td>C3 affective states</td><td>focus, distraction, stress, relaxation, depression, excitement</td><td class="num">2.5 min</td></tr>
           <tr><td>C4 gestures at antenna distances</td><td>the 21 gestures of C1, RFID only; the antenna at 1.5 m or 3 m, in front or at the side</td><td class="num">1.5 s</td></tr>
         </table>
         <p style="margin-top:14px">The ceiling radars were 5 m high for the first 16 participants of C1 and 3 m
@@ -128,20 +128,22 @@
     <h2>One zip per trial and modality</h2>
     <p class="lead">The release has flat folders and one zip for each trial and modality (the file convention of the
       <a href="https://huggingface.co/datasets/hku-aiot/OctoNet">OctoNet</a> dataset), named <code>&lt;node&gt;_&lt;modality&gt;_&lt;environment&gt;_&lt;user&gt;_&lt;class&gt;_&lt;repetition&gt;_&lt;time&gt;.zip</code>.
-      The five zips of a trial share the same time stamp.</p>
+      The zips of a trial share the same time stamp.</p>
     <pre><code>radar/   r_radar_1_1_M10_1_20250710163420.zip    radar_00.npz … radar_12.npz
 lora/    5_lora_1_1_M10_1_20250710163420.zip     abs_200Hz.csv, diff_200Hz.csv, var_20Hz.csv
 rfid/    13_rfid_1_1_M10_1_20250710163420.zip    rfid.csv   (C4 antenna positions 15, 16, 17: rfid_15/ rfid_16/ rfid_17/)
 mocap/   14_mocap_1_1_M10_1_20250710163420.zip   mocap.csv
 imu/     x_imu_1_3_E01_1_20250720180733.zip      Chest_acc_data.csv, Chest_gyro_data.csv, …
-meta/    trials_Lab.csv, classes.csv, nodes.csv, packing_log_Lab.csv
-scripts/ readers, loader, download script</code></pre>
+ecg/     x_ecg_2_62_E01_1_20261002152433.zip      ecg.csv
+eeg/     x_eeg_2_62_E01_1_20261002152433.zip      raw_eeg_512hz.csv, summary_1hz.csv
+meta/    trials_Lab.csv, trials_LivingRoom.csv, trials_Industry.csv, participants.csv, self_assessment.csv, classes.csv, nodes.csv
+scripts/ readers, loader, download and unpack scripts, demo notebook</code></pre>
     <table>
       <tr><th>Environment</th><th>Modalities</th><th>Participants</th><th>Trials</th><th>Zips</th></tr>
       <tr><td>1 laboratory</td><td>radar, LoRa, RFID, motion capture, IMU (C3); C4 RFID only</td><td class="num">44</td><td class="num">17,030</td><td class="num">36,060</td></tr>
       <tr><td>2 living room</td><td>radar, IMU; plus ECG and EEG for a physiological reference subset of 7 participants (34 phases)</td><td class="num">17 + 7</td><td class="num">2,172 + 34</td><td class="num">4,339 + 136</td></tr>
       <tr><td>3 industrial site</td><td>radar, IMU</td><td class="num">9</td><td class="num">1,182</td><td class="num">2,359</td></tr>
-      <tr><td><b>Total</b></td><td></td><td class="num">61</td><td class="num">20,384</td><td class="num">42,758 (1.7 GB)</td></tr>
+      <tr><td><b>Total</b></td><td></td><td class="num">61</td><td class="num">20,384</td><td class="num">42,894 (1.9 GB)</td></tr>
     </table>
     <p class="fine">Note: the laboratory IMU recordings of C1 and C2 are not uploaded yet, because of a technical issue we faced
       during the data collection. We will upload them once the issue is solved.</p>
@@ -156,13 +158,13 @@ scripts/ readers, loader, download script</code></pre>
       <tr><td><b>All</b></td><td class="num"><b>31</b></td><td class="num"><b>30</b></td><td class="num"><b>61</b></td><td class="num"><b>44</b></td><td class="num"><b>17</b></td></tr>
     </table>
     <p class="fine">Gender, age range, shoulder width, head-to-shoulder distance, arm length, and the campaigns of every participant
-      are in <code>meta/participants.csv</code>.
+      are in <code>meta/participants.csv</code>; the self-ratings after each C3 state (0 to 5) in <code>meta/self_assessment.csv</code>.
       Gender and age of the 7 participants of the physiological reference subset were not recorded.</p>
     <table style="margin-top:18px">
       <tr><th>Segments (one per trial and modality; one per radar file)</th><th>Total segments</th></tr>
       <tr><td>C1 gestures</td><td class="num">66,167</td></tr>
       <tr><td>C2 activities</td><td class="num">31,943</td></tr>
-      <tr><td>C3 sentiments</td><td class="num">2,258</td></tr>
+      <tr><td>C3 affective states</td><td class="num">2,258</td></tr>
       <tr><td>C4 gestures at antenna distances (RFID)</td><td class="num">10,620</td></tr>
       <tr><td>Living room (radar files, IMU)</td><td class="num">26,947</td></tr>
       <tr><td>Industrial site (radar files, IMU)</td><td class="num">13,880</td></tr>
