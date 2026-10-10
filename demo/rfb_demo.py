@@ -10,8 +10,8 @@ and data_visualizer_new.py): load_recording, iter_segments, show_keyframe.
         show_keyframe(clip, "mocap", "Motion-capture skeleton")
 
 Differences from OctoNet, on purpose:
-- A trial of RF-Behavior is one recorded gesture, activity, or sentiment
-  expression; it is already cut. load_recording takes the trial id (the
+- A trial of RF-Behavior is one recorded gesture, activity, or affective
+  behavior; it is already cut. load_recording takes the trial id (the
   repetition) instead of a cut table. C3 trials are long (about 2 min), so
   iter_segments can split them into windows (segment_s).
 - The data stays in the release zips; nothing is unzipped. The loader
