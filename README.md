@@ -10,7 +10,7 @@ plain JavaScript.
 | `data/samples/` | Sample zips in the release format: 37 laboratory trials (one participant per campaign, repetition 01) and trials of one living-room and one industrial participant. The full dataset is on [Hugging Face](https://huggingface.co/datasets/Si-Z/RF-Behavior). |
 | `data/meta/` | `trials_samples.csv`, `classes.csv`, `nodes.csv` |
 | `assets/` | Logos and the setup figure |
-| `rf_behavior_sync_pipeline/` | Stand-alone demo in the style of the OctoNet demo: `streaming.py` downloads a selection from the Hub by `config.json`, `demo.ipynb` loads and draws it (`rfb_demo.py`). See its README. |
+| `demo/` | Stand-alone demo in the style of the OctoNet demo: `streaming.py` downloads a selection from the Hub by `config.json`, `demo.ipynb` loads and draws it (`rfb_demo.py`). See its README. |
 
 The site is served by GitHub Pages from the `main` branch: https://sizuo.github.io/RF-Behavior/
 
