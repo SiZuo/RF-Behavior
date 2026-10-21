@@ -159,7 +159,7 @@
     if (!cache[key]) {
       status.textContent = `Loading ${key} …`;
       const entries = await R.fetchZip(dataUrl(key.slice(source.length + 1)), headers());
-      cache[key] = mod === "radar" ? R.readRadar(entries, parseFloat(r.ceiling_radar_height_m))
+      cache[key] = mod === "radar" ? R.readRadar(entries, parseFloat(r.ceiling_radar_height_m), r.campaign)
                  : mod === "lora" ? R.readLora(entries)
                  : mod === "rfid" ? R.readRfid(entries)
                  : mod === "mocap" ? R.readMocap(entries, r.campaign, r.class)
@@ -192,14 +192,14 @@
     const LEGEND_N = present.length + 1;
     const traces = present.map((k, i) => ({ type: "scatter3d", mode: "markers",
       name: `radar ${k}${d.radars[k] ? "" : " (no file)"}`, marker: { size: 3, color: RADAR_COLORS[k] }, ...frames[0].data[i] }));
-    const pos = radars.map(k => R.radarPosition(k, ceiling));
+    const pos = radars.map(k => R.radarPosition(k, ceiling, r.campaign));
     traces.push({ type: "scatter3d", mode: "markers+text", name: "radar positions", text: radars.map(String),
       textposition: "top center", textfont: { size: 10 }, x: pos.map(p => p[0]), y: pos.map(p => p[1]), z: pos.map(p => p[2]),
       marker: { size: 5, color: radars.map(k => RADAR_COLORS[k]), symbol: radars.map(k => R.CEILING.has(k) ? "diamond" : "square"),
                 line: { color: "#121417", width: 1 } }, hoverinfo: "text" });
-    const circle = [...Array(61).keys()].map(i => i / 60 * 2 * Math.PI);
-    traces.push({ type: "scatter3d", mode: "lines", name: "1.5 m circle", showlegend: false, hoverinfo: "skip",
-      x: circle.map(a => 1.5 * Math.cos(a)), y: circle.map(a => 1.5 * Math.sin(a)), z: circle.map(() => 0),
+    const outline = R.floorOutline(r.campaign);
+    traces.push({ type: "scatter3d", mode: "lines", name: "recording area", showlegend: false, hoverinfo: "skip",
+      x: outline.x, y: outline.y, z: outline.x.map(() => 0),
       line: { color: "#9aa3ad", width: 2, dash: "dash" } });
     const axis = { range: [-4.5, 4.5], ...grid() };
     const layout = { ...base(), height: 640, title: { text: title(r, `point cloud, ${tMin.toFixed(2)} s`), x: 0.02, y: 0.985, yanchor: "top" },

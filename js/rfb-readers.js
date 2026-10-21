@@ -4,11 +4,26 @@
 window.RFBReaders = (function () {
   const NODE = { radar: "r", lora: "5", rfid: "13", mocap: "14", imu: "x" };
   const CEILING = new Set([0, 1, 2, 3, 4]);
-  const GROUND_XYZ = { 5: [1.5, 0, 1.3], 6: [1.06, -1.06, 1.3], 7: [0, -1.5, 1.3], 8: [-1.06, -1.06, 1.3],
-                       9: [-1.5, 0, 1.3], 10: [-1.06, 1.06, 1.3], 11: [0, 1.5, 1.3], 12: [1.06, 1.06, 1.3] };
+  // two ground layouts (as in scripts/Radar/read_vis.py): C1 and C4 a 1.5 m circle; C2 and C3 a 6 m x 2 m
+  // area with the measured radar positions (paper, Table 21) and facing angles fitted from the data
+  const GROUND_LAYOUTS = {
+    circle: { xyz: { 5: [1.5, 0, 1.3], 6: [1.06, -1.06, 1.3], 7: [0, -1.5, 1.3], 8: [-1.06, -1.06, 1.3],
+                     9: [-1.5, 0, 1.3], 10: [-1.06, 1.06, 1.3], 11: [0, 1.5, 1.3], 12: [1.06, 1.06, 1.3] },
+              yaw: { 5: 180, 6: 135, 7: 90, 8: 45, 9: 0, 10: -45, 11: -90, 12: -135 }, outline: ["circle", 1.5] },
+    rectangle: { xyz: { 5: [2.6055, -0.0940, 0.9407], 6: [1.8044, -3.4535, 0.8953], 7: [-0.2786, -3.1746, 0.9019],
+                        8: [-2.6325, -3.0253, 0.8815], 9: [-2.9319, -0.1305, 0.8704], 10: [-1.1499, 3.2323, 0.8784],
+                        11: [0.0234, 3.1029, 0.9253], 12: [1.1062, 2.8954, 0.9261] },
+                 yaw: { 5: 180, 6: 125, 7: 87, 8: 50, 9: 3, 10: -76, 11: -90, 12: -122 }, outline: ["rectangle", 1.0, 3.0] },
+  };
+  const LAYOUT_OF_CAMPAIGN = { C1: "circle", C4: "circle", C2: "rectangle", C3: "rectangle" };
+  const groundLayout = campaign => GROUND_LAYOUTS[LAYOUT_OF_CAMPAIGN[String(campaign || "C1").slice(0, 2)] || "circle"];
+  function floorOutline(campaign) {
+    const [kind, a, b] = groundLayout(campaign).outline;
+    if (kind === "circle") { const t = [...Array(61).keys()].map(i => i / 60 * 2 * Math.PI); return { x: t.map(v => a * Math.cos(v)), y: t.map(v => a * Math.sin(v)) }; }
+    return { x: [-a, a, a, -a, -a], y: [-b, -b, b, b, -b] };
+  }
   const CEILING_XY = { 5: { 0: [-2, 4], 1: [2, 4], 2: [0, 0], 3: [-2, -4], 4: [2, -4] },
                        3: { 0: [-0.75, 1.73], 1: [0.75, 1.73], 2: [0, 0], 3: [-0.75, -1.73], 4: [0.75, -1.73] } };
-  const GROUND_ROTATION_DEG = { 5: 180, 6: 135, 7: 90, 8: 45, 9: 0, 10: -45, 11: -90, 12: -135 };
   const TAGS = ["A2", "A3", "A4", "A6", "A7", "A8"];
   const TAG_POSITION = { A2: "right wrist", A3: "right forearm", A4: "right upper arm",
                          A6: "left wrist", A7: "left forearm", A8: "left upper arm" };
@@ -67,18 +82,18 @@ window.RFBReaders = (function () {
   }
 
   // ---- radar ---------------------------------------------------------------
-  function radarPosition(r, ceilingHeight) {
+  function radarPosition(r, ceilingHeight, campaign) {
     if (CEILING.has(r)) { const h = ceilingHeight >= 4 ? 5 : 3; return [...CEILING_XY[h][r], ceilingHeight]; }
-    return GROUND_XYZ[r];
+    return groundLayout(campaign).xyz[r];
   }
   // points: Float64Array rows of 5 (time, x, y, z, strength) -> {x, y, z} arrays in the global frame
-  function toGlobal(points, n, r, ceilingHeight) {
-    const [px, py, pz] = radarPosition(r, ceilingHeight);
+  function toGlobal(points, n, r, ceilingHeight, campaign) {
+    const [px, py, pz] = radarPosition(r, ceilingHeight, campaign);
     const x = new Float64Array(n), y = new Float64Array(n), z = new Float64Array(n);
     if (CEILING.has(r)) {
       for (let i = 0; i < n; i++) { x[i] = points[i * 5 + 3] + px; y[i] = points[i * 5 + 2] + py; z[i] = -points[i * 5 + 1] + pz; }
     } else {
-      const t = GROUND_ROTATION_DEG[r] * Math.PI / 180, c = Math.cos(t), s = Math.sin(t);
+      const t = groundLayout(campaign).yaw[r] * Math.PI / 180, c = Math.cos(t), s = Math.sin(t);
       for (let i = 0; i < n; i++) {
         const xr = points[i * 5 + 1], yr = points[i * 5 + 2];
         x[i] = c * xr - s * yr + px; y[i] = s * xr + c * yr + py; z[i] = points[i * 5 + 3] + pz;
@@ -87,7 +102,7 @@ window.RFBReaders = (function () {
     return { x, y, z };
   }
   // zip entries -> {radar: {n, t (s from trial start), x, y, z, strength, frame}}, t0
-  function readRadar(entries, ceilingHeight) {
+  function readRadar(entries, ceilingHeight, campaign) {
     const radars = {};
     let t0 = Infinity;
     for (const name of Object.keys(entries).sort()) {
@@ -96,7 +111,7 @@ window.RFBReaders = (function () {
       const pts = readNpy(inner["points.npy"]), frame = readNpy(inner["frame.npy"]);
       const n = pts.shape[0];
       if (!n) continue;
-      const g = toGlobal(pts.data, n, r, ceilingHeight);
+      const g = toGlobal(pts.data, n, r, ceilingHeight, campaign);
       const tAbs = new Float64Array(n), strength = new Float64Array(n);
       for (let i = 0; i < n; i++) { tAbs[i] = pts.data[i * 5]; strength[i] = pts.data[i * 5 + 4]; }
       t0 = Math.min(t0, tAbs[0]);
@@ -227,5 +242,5 @@ window.RFBReaders = (function () {
   }
 
   return { NODE, CEILING, TAGS, TAG_POSITION, BODIES, BONES, zipName, fetchZip, readNpy, parseTable, parseCsv,
-           radarPosition, readRadar, readLora, readRfid, rfidSpeed, readMocap, bodySpeed, readImu };
+           radarPosition, floorOutline, readRadar, readLora, readRfid, rfidSpeed, readMocap, bodySpeed, readImu };
 })();
